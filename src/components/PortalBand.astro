@@ -36,8 +36,18 @@ const { eyebrow, text, variant = 'home' } = Astro.props;
   .portal__badge a { display: block; width: 240px; }
   .portal__badge img { width: 240px; height: 80px; }
 
-  @media (max-width: 1199px) {
-    .portal__inner, .portal--process .portal__inner { flex-direction: column; align-items: flex-start; gap: 32px; }
+  @media (max-width: 1080px) {
+    .portal__inner, .portal--process .portal__inner { gap: 40px; }
+    .portal__badge { width: 260px; }
+  }
+  /* Tablet & phone: stacked, badge below the copy, left-aligned */
+  @media (max-width: 760px) {
+    .portal__inner, .portal--process .portal__inner {
+      flex-direction: column; align-items: flex-start; gap: 28px;
+      padding-top: var(--sec); padding-bottom: var(--sec);
+    }
     .portal__badge { width: auto; }
+    .portal__label { width: auto; text-align: left; }
+    .portal__text { font-size: 16.5px; }
   }
 </style>

@@ -57,7 +57,7 @@ On hold (see `MEET_THE_TEAM_LATER.md` in the design handoff). When it's ready: a
 
 ## Before launch
 
-- [ ] Confirm the success-message copy with the client: "Thank you — we’ll be in touch within one business day."
+- [x] Success-message copy approved: "Thank you — we’ll be in touch within one business day."
 - [ ] Set environment variables and verify the sender domain in Resend
 - [ ] Send a test inquiry with photos
 - [ ] Connect the domain; `site` in `astro.config.mjs` is set to `https://frenchlakebuild.com`

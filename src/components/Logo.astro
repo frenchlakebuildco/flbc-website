@@ -9,10 +9,10 @@ const { size = 'header' } = Astro.props;
 <a href="/" class:list={['logo', `logo--${size}`]} aria-label="French Lake Build Co. — home">
   <svg class="logo__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
     <defs><clipPath id={`flbc-clip-${size}`}><circle cx="50" cy="50" r="41.67" /></clipPath></defs>
-    <circle cx="50" cy="50" r="48.61" fill="none" stroke="#1E2B33" stroke-width="3.2" />
+    <circle class="logo__ring" cx="50" cy="50" r="48.61" fill="none" stroke-width="3.2" />
     <g clip-path={`url(#flbc-clip-${size})`}>
       <rect x="0" y="0" width="100" height="54.3" fill="#B08D57" />
-      <rect x="0" y="57.63" width="100" height="42.37" fill="#1E2B33" />
+      <rect class="logo__low" x="0" y="57.63" width="100" height="42.37" />
     </g>
   </svg>
   <span class="logo__text">
@@ -24,15 +24,21 @@ const { size = 'header' } = Astro.props;
 </a>
 
 <style>
-  .logo { display: inline-flex; align-items: center; gap: 12px; color: var(--navy); }
-  .logo:hover { color: var(--navy); }
+  /* Colours are variables so the header can switch to the on-dark lockup when the menu is open */
+  .logo {
+    --logo-ink: var(--navy); --logo-ring: var(--navy); --logo-low: var(--navy); --logo-tag: var(--text-muted);
+    display: inline-flex; align-items: center; gap: 12px; color: var(--logo-ink); transition: none;
+  }
+  .logo:hover { color: var(--logo-ink); }
+  .logo__ring { stroke: var(--logo-ring); }
+  .logo__low { fill: var(--logo-low); }
   .logo__mark { width: 46px; height: 46px; flex: none; }
   .logo__text { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
   .logo__name { font-family: var(--font-display); font-size: 22px; line-height: 1; white-space: nowrap; }
   .logo__tag {
     display: flex; align-items: center; gap: 7px;
     font-size: 9.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--text-muted); white-space: nowrap; line-height: 1.2;
+    color: var(--logo-tag); white-space: nowrap; line-height: 1.2;
   }
   .logo__tag i { width: 1px; height: 9px; background: var(--brass); }
 
@@ -41,10 +47,10 @@ const { size = 'header' } = Astro.props;
   .logo--footer .logo__tag { font-size: 9px; }
   .logo--footer .logo__tag i { height: 8px; }
 
-  @media (max-width: 420px) {
-    .logo--header { gap: 9px; }
-    .logo--header .logo__mark { width: 36px; height: 36px; }
-    .logo--header .logo__name { font-size: 17px; }
+  @media (max-width: 480px) {
+    .logo--header { gap: 10px; }
+    .logo--header .logo__mark { width: 40px; height: 40px; }
+    .logo--header .logo__name { font-size: 19px; }
     .logo--header .logo__tag { font-size: 8.5px; gap: 6px; }
   }
 </style>

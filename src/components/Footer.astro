@@ -27,8 +27,8 @@ import Logo from './Logo.astro';
       </div>
     </div>
     <div class="site-footer__bottom">
-      <div class="site-footer__legal"><span>© 2026 French Lake Build Co.</span><span>MN Lic. BC810479</span></div>
-      <div><a href="https://www.instagram.com/frenchlakebuildco/" target="_blank" rel="noopener">Instagram</a></div>
+      <div class="site-footer__legal"><span>© 2026 French Lake Build Co.</span><span>MN Lic. BC810479</span><span class="site-footer__area">Serving homeowners across the greater Twin Cities</span></div>
+      <div class="site-footer__social"><a href="https://www.instagram.com/frenchlakebuildco/" target="_blank" rel="noopener">Instagram</a></div>
     </div>
   </div>
 </footer>
@@ -43,7 +43,6 @@ import Logo from './Logo.astro';
   .site-footer__cols { flex: 1; display: flex; gap: 52px; }
   .site-footer__col { display: flex; flex-direction: column; gap: 12px; font-size: 15.5px; color: var(--text-body); }
   .site-footer__col a { color: var(--text-body); }
-  .site-footer__col a:hover { color: var(--navy); }
   .site-footer__heading {
     font-family: var(--font-body); font-size: 11px; font-weight: 600;
     letter-spacing: 0.14em; text-transform: uppercase; color: var(--navy); line-height: 1.4;
@@ -54,17 +53,34 @@ import Logo from './Logo.astro';
     font-size: 11.5px; font-weight: 500; letter-spacing: 0.06em; color: var(--text-muted);
   }
   .site-footer__legal { display: flex; gap: 26px; flex-wrap: wrap; }
+  .site-footer__area { display: none; }
   .site-footer__bottom a { color: var(--text-body); }
-  .site-footer__bottom a:hover { color: var(--navy); }
-
-  @media (max-width: 1199px) {
-    .site-footer__top { flex-direction: column; gap: 40px; }
+  @media (hover: hover) {
+    .site-footer__col a:hover, .site-footer__bottom a:hover { color: var(--navy); }
   }
-  @media (max-width: 767px) {
-    .site-footer__cols { flex-direction: column; gap: 32px; }
-    .site-footer__col a { min-height: 44px; display: flex; align-items: center; margin-block: -10px; }
-    .site-footer__bottom { flex-direction: column; align-items: flex-start; }
-    .site-footer__legal { gap: 8px 26px; }
+
+  @media (max-width: 1080px) {
+    .site-footer__top { gap: 48px; }
+    .site-footer__cols { gap: 40px; }
+  }
+  /* Tablet: 2 columns, brand block spans both */
+  @media (max-width: 760px) {
+    .site-footer > .wrap { padding-top: 48px; gap: 36px; }
+    .site-footer__top { display: grid; grid-template-columns: 1fr 1fr; gap: 36px 24px; }
+    .site-footer__brand { width: auto; grid-column: 1 / -1; }
+    .site-footer__cols { display: contents; }
+    .site-footer__col { font-size: 16.5px; gap: 4px; }
+    .site-footer__heading { margin-bottom: 6px; }
+    .site-footer__col a, .site-footer__col span { min-height: 44px; display: flex; align-items: center; }
+    .site-footer__blurb { font-size: 16.5px; }
+    .site-footer__area { display: inline; }
+  }
+  /* Phone: one column, license and service area at the bottom */
+  @media (max-width: 480px) {
+    .site-footer__top { grid-template-columns: 1fr; gap: 28px; }
+    .site-footer__bottom { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .site-footer__legal { flex-direction: column; gap: 6px; }
     .site-footer__bottom a { display: inline-flex; min-height: 44px; align-items: center; }
+    .site-footer__social { order: -1; }
   }
 </style>

@@ -9,7 +9,7 @@ const { eyebrow, title, text } = Astro.props;
       <h2 class="display h2 on-dark">{title}</h2>
       <p class="cta__text">{text}</p>
     </div>
-    <a href="/start-a-project" class="btn btn--sand cta__btn">Start a project</a>
+    <a href="/start-a-project" class="btn btn--sand btn--block-phone cta__btn">Start a project</a>
   </div>
 </section>
 
@@ -20,10 +20,16 @@ const { eyebrow, title, text } = Astro.props;
   .cta__text { font-weight: 300; font-size: 18px; line-height: 1.6; color: var(--on-dark-body); max-width: 52ch; }
   .cta__btn { flex: none; }
 
-  @media (max-width: 1199px) {
-    .cta__inner { flex-direction: column; align-items: flex-start; gap: 28px; padding-top: 64px; padding-bottom: 64px; }
+  @media (max-width: 1080px) {
+    .cta__inner { padding-top: 64px; padding-bottom: 64px; }
   }
-  @media (max-width: 767px) {
-    .cta__inner { padding-top: 56px; padding-bottom: 56px; }
+  /* Tablet & phone: stacked, button below the copy (full width on phones) */
+  @media (max-width: 760px) {
+    .cta__inner { flex-direction: column; align-items: flex-start; gap: 28px; padding-top: var(--sec); padding-bottom: var(--sec); }
+    .cta__inner > .cta__copy { gap: 14px; }
+    .cta__text { font-size: 17.5px; }
+  }
+  @media (max-width: 480px) {
+    .cta__inner { align-items: stretch; }
   }
 </style>

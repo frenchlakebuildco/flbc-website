@@ -17,5 +17,6 @@ import Base from '../layouts/Base.astro';
   .nf { padding-top: 120px; padding-bottom: 140px; display: flex; flex-direction: column; gap: 20px; }
   .nf__text { max-width: 44ch; }
   .nf__actions { display: flex; gap: 14px; flex-wrap: wrap; padding-top: 12px; }
-  @media (max-width: 767px) { .nf { padding-top: 64px; padding-bottom: 80px; } }
+  @media (max-width: 760px) { .nf { padding-top: 64px; padding-bottom: 80px; } }
+  @media (max-width: 480px) { .nf__actions .btn { width: 100%; } }
 </style>

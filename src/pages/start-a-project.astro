@@ -11,10 +11,10 @@ import InquiryForm from '../components/InquiryForm.astro';
     <div class="wrap start__inner">
       <div class="start__copy">
         <div class="eyebrow eyebrow--light">Start a project</div>
-        <h1 class="display h2 h2--40 on-dark start__title" id="start-title">Tell us about your home</h1>
+        <h1 class="display on-dark start__title" id="start-title">Tell us about your home</h1>
         <p class="start__text">Every inquiry is read by a member of our team, and we reply within one business day. If it seems a good fit, we will arrange a visit.</p>
         <div class="start__contact">
-          <div><a href="tel:+19523338665">952-333-8665</a> · <a href="mailto:hello@frenchlakebuild.com">hello@frenchlakebuild.com</a></div>
+          <div class="contact-line"><a href="tel:+19523338665" class="contact-phone">952-333-8665</a><span class="contact-sep" aria-hidden="true"> · </span><a href="mailto:hello@frenchlakebuild.com">hello@frenchlakebuild.com</a></div>
           <div>MN Lic. BC810479 · fully insured</div>
         </div>
       </div>
@@ -27,21 +27,29 @@ import InquiryForm from '../components/InquiryForm.astro';
   .start { background: var(--navy); }
   .start__inner { padding-top: 96px; padding-bottom: 104px; display: flex; gap: 72px; }
   .start__copy { flex: 1; display: flex; flex-direction: column; gap: 22px; }
-  .start__title { max-width: 20ch; }
+  .start__title { max-width: 20ch; font-size: min(40px, var(--h1)); line-height: 1.06; }
   .start__text { font-size: 17.5px; line-height: 1.65; color: var(--on-dark-body); max-width: 44ch; }
   .start__contact {
     display: flex; flex-direction: column; gap: 14px; padding-top: 24px; border-top: 1px solid var(--rule-dark);
     font-size: 16px; line-height: 1.6; color: var(--on-dark-muted);
   }
   .start__contact a { color: var(--on-dark-muted); }
-  .start__contact a:hover { color: var(--white); }
+  @media (hover: hover) { .start__contact a:hover { color: var(--white); } }
 
-  @media (max-width: 1199px) {
-    .start__inner { flex-direction: column; gap: 48px; padding-top: 72px; padding-bottom: 72px; }
+  @media (max-width: 1080px) {
+    .start__inner { flex-direction: column; gap: 48px; padding-top: var(--sec); padding-bottom: var(--sec); }
+    .start__text { max-width: 36em; }
   }
-  @media (max-width: 767px) {
-    .start__inner { padding: 48px 0 0; gap: 36px; }
-    .start__copy { padding-inline: var(--pad); }
-    .start :global(.inq) { max-width: none; }
+  @media (max-width: 760px) {
+    .start__inner { gap: 40px; }
+    .start__copy { gap: 18px; }
+    .start__text { font-size: 16.5px; }
   }
+  @media (max-width: 480px) {
+    .start__inner { padding-top: 40px; padding-bottom: 0; padding-inline: 0; gap: 0; }
+    .start__copy { padding-inline: var(--pad); padding-bottom: 32px; }
+    .start__contact { gap: 6px; padding-top: 16px; font-size: 16.5px; }
+  }
+  /* Phone number stands out in white once the contact lines stack */
+  @media (max-width: 760px) { .start__contact .contact-phone { color: var(--white); } }
 </style>

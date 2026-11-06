@@ -38,7 +38,7 @@ const points = [
 >
   <!-- 1. Hero -->
   <section class="hero">
-    <div class="hero__media">
+    <div class="hero__media" aria-hidden="true">
       <Photo src={work(22)} alt="" sizes="100vw" widths={[800, 1200, 1600, 2000]} eager />
     </div>
     <div class="hero__shade" aria-hidden="true"></div>
@@ -67,7 +67,7 @@ const points = [
     <div class="services__grid">
       {services.map((s) => (
         <article class="svc">
-          <div class="svc__img"><Photo src={work(s.n)} alt={s.alt} sizes="(min-width: 1200px) 320px, (min-width: 768px) 50vw, 100vw" widths={[400, 640, 960]} /></div>
+          <div class="svc__img bleed-phone"><Photo src={work(s.n)} alt={s.alt} sizes="(min-width: 1081px) 320px, (min-width: 761px) 50vw, 100vw" widths={[400, 640, 960, 1200]} /></div>
           <div class="svc__body">
             <h3 class="display svc__title">{s.title}</h3>
             <p class="svc__text">{s.text}</p>
@@ -84,15 +84,16 @@ const points = [
         <div class="eyebrow">Our work</div>
         <h2 class="display h2" id="recent-title">Recent work</h2>
       </div>
-      <a href="/our-work" class="text-link">See our work →</a>
+      <a href="/our-work" class="text-link text-link--head">See our work →</a>
     </div>
-    <div class="recent__grid">
+    <div class="recent__grid bleed-phone">
       {recent.map((r) => (
         <a href="/our-work" class="recent__tile">
-          <Photo src={work(r.n)} alt={r.alt} sizes="(min-width: 1200px) 330px, (min-width: 768px) 50vw, 100vw" widths={[400, 660, 1000]} />
+          <Photo src={work(r.n)} alt={r.alt} sizes="(min-width: 1081px) 25vw, 50vw" widths={[400, 660, 1000]} />
         </a>
       ))}
     </div>
+    <a href="/our-work" class="text-link text-link--foot">See our work →</a>
   </section>
 
   <!-- 4. Process summary -->
@@ -166,7 +167,7 @@ const points = [
         <h2 class="display h2 h2--40 on-dark inquire__title" id="inquire-title">We’d love to hear about your home</h2>
         <p class="inquire__text">Every note is read personally by a member of our team, and you’ll hear from us within one business day. If it feels like a good fit, we’ll arrange a complimentary visit to your home.</p>
         <div class="inquire__contact">
-          <div><a href="tel:+19523338665">952-333-8665</a> · <a href="mailto:hello@frenchlakebuild.com">hello@frenchlakebuild.com</a></div>
+          <div class="contact-line"><a href="tel:+19523338665" class="contact-phone">952-333-8665</a><span class="contact-sep" aria-hidden="true"> · </span><a href="mailto:hello@frenchlakebuild.com">hello@frenchlakebuild.com</a></div>
           <div>MN Lic. BC810479 · fully insured</div>
         </div>
       </div>
@@ -176,21 +177,25 @@ const points = [
 </Base>
 
 <style>
-  /* Hero */
-  .hero { position: relative; height: 620px; overflow: hidden; background: var(--navy); }
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; overflow: hidden; background: var(--navy);
+    height: 620px;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
   .hero__media { position: absolute; inset: 0; }
   .hero__shade {
     position: absolute; inset: 0;
     background: linear-gradient(90deg, rgba(30,43,51,0.86) 0%, rgba(30,43,51,0.6) 46%, rgba(30,43,51,0.08) 100%);
   }
-  .hero__inner { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 56px; }
+  .hero__inner { position: relative; padding-top: 120px; padding-bottom: 56px; }
   .hero__content { display: flex; flex-direction: column; gap: 18px; max-width: 660px; }
-  .hero__title { font-size: 58px; line-height: 1.06; color: var(--white); }
-  .hero__lede { font-weight: 300; font-size: 20px; line-height: 1.6; color: var(--on-dark-body); max-width: 52ch; }
-  .hero__actions { display: flex; gap: 14px; padding-top: 8px; flex-wrap: wrap; }
+  .hero__title { font-size: var(--h1); line-height: 1.06; color: var(--white); }
+  .hero__lede { font-weight: 300; font-size: var(--lede); line-height: 1.6; color: var(--on-dark-body); max-width: 52ch; }
+  .hero__actions { display: flex; gap: 14px; padding-top: 8px; }
 
-  /* Services */
-  .services { padding-top: 96px; padding-bottom: 48px; display: flex; flex-direction: column; gap: 44px; }
+  /* ---------- Services ---------- */
+  .services { padding-top: var(--sec); padding-bottom: 48px; display: flex; flex-direction: column; gap: 44px; }
   .services__intro { max-width: 40ch; }
   .services__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
   .svc { background: var(--white); border: 1px solid var(--border); display: flex; flex-direction: column; }
@@ -199,17 +204,17 @@ const points = [
   .svc__title { font-size: 21px; line-height: 1.12; }
   .svc__text { font-size: 16.5px; line-height: 1.6; color: var(--text-body); }
 
-  /* Recent work */
-  .recent { padding-top: 48px; padding-bottom: 96px; display: flex; flex-direction: column; gap: 44px; }
+  /* ---------- Recent work ---------- */
+  .recent { padding-top: 48px; padding-bottom: var(--sec); display: flex; flex-direction: column; gap: 44px; }
   .text-link { font-size: 12.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lake-text); white-space: nowrap; }
+  .text-link--foot { display: none; }
   .recent__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
   .recent__tile { display: block; aspect-ratio: 4 / 5; overflow: hidden; }
   .recent__tile :global(.photo) { transition: transform 600ms var(--ease); }
-  .recent__tile:hover :global(.photo) { transform: scale(1.025); }
 
-  /* Process */
+  /* ---------- Process ---------- */
   .process { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-  .process__inner { padding-top: 96px; padding-bottom: 96px; display: flex; flex-direction: column; gap: 44px; }
+  .process__inner { padding-top: var(--sec); padding-bottom: var(--sec); display: flex; flex-direction: column; gap: 44px; }
   .process__head { max-width: 700px; }
   .process__head .h2 { max-width: 24ch; }
   .process__intro { max-width: 40ch; }
@@ -219,7 +224,6 @@ const points = [
     padding: 34px 32px; display: flex; flex-direction: column; gap: 14px; color: var(--navy);
     transition: background-color 140ms var(--ease);
   }
-  .phase:hover { color: var(--navy); background: #F8F4EE; }
   .phase--explore { border-top-color: var(--lake); }
   .phase--design { border-top-color: var(--brass); }
   .phase--build { border-top-color: var(--navy); }
@@ -227,11 +231,11 @@ const points = [
   .phase--explore .phase__label { color: var(--lake-text); }
   .phase--design .phase__label { color: var(--brass-text); }
   .phase--build .phase__label { color: var(--navy); }
-  .phase__title { font-size: 27px; line-height: 1.12; }
+  .phase__title { font-size: var(--h3-card); line-height: 1.12; }
   .phase__text { font-size: 16.5px; line-height: 1.6; color: var(--text-body); }
 
-  /* One team */
-  .team { padding-top: 96px; padding-bottom: 96px; display: flex; gap: 64px; align-items: center; }
+  /* ---------- One team ---------- */
+  .team { padding-top: var(--sec); padding-bottom: var(--sec); display: flex; gap: 64px; align-items: center; }
   .team__copy { flex: 1; display: flex; flex-direction: column; gap: 20px; }
   .team__title { max-width: 20ch; }
   .team__lede { font-size: 17.5px; line-height: 1.65; color: var(--text-body); max-width: 46ch; }
@@ -255,7 +259,7 @@ const points = [
   .compare__card--sep ul { color: var(--text-muted); }
   .compare__card--sep li { border-color: var(--border); }
 
-  /* Inquiry */
+  /* ---------- Inquiry ---------- */
   .inquire { background: var(--navy); }
   .inquire__inner { padding-top: 88px; padding-bottom: 88px; display: flex; gap: 72px; }
   .inquire__copy { flex: 1; display: flex; flex-direction: column; gap: 22px; }
@@ -266,43 +270,74 @@ const points = [
     font-size: 16px; line-height: 1.6; color: var(--on-dark-muted);
   }
   .inquire__contact a { color: var(--on-dark-muted); }
-  .inquire__contact a:hover { color: var(--white); }
 
-  /* ---------- Tablet ---------- */
-  @media (max-width: 1199px) {
-    .services__grid, .recent__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .process__grid { flex-direction: column; gap: 20px; }
+  @media (hover: hover) {
+    .recent__tile:hover :global(.photo) { transform: scale(1.025); }
+    .phase:hover { color: var(--navy); background: #F8F4EE; }
+    .inquire__contact a:hover { color: var(--white); }
+  }
+
+  /* ========== Laptop ≤1080 ========== */
+  @media (max-width: 1080px) {
+    .services__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .recent__grid { gap: 12px; }
+    .process__grid { gap: 20px; }
+    .phase { padding: 30px 26px; }
     .team { flex-direction: column; align-items: stretch; gap: 48px; }
     .compare { width: 100%; }
-    .inquire__inner { flex-direction: column; gap: 48px; }
-    .services, .recent { padding-top: 72px; }
-    .recent, .team { padding-bottom: 72px; }
-    .process__inner { padding-top: 72px; padding-bottom: 72px; }
-    .inquire__inner { padding-top: 72px; padding-bottom: 72px; }
+    .inquire__inner { flex-direction: column; gap: 48px; padding-top: var(--sec); padding-bottom: var(--sec); }
+    .inquire__title, .inquire__text { max-width: 36em; }
   }
 
-  /* ---------- Mobile ---------- */
-  @media (max-width: 767px) {
-    .hero { height: 520px; }
-    .hero__shade { background: linear-gradient(0deg, rgba(30,43,51,0.9) 0%, rgba(30,43,51,0.65) 55%, rgba(30,43,51,0.25) 100%); }
-    .hero__inner { padding-bottom: 36px; }
-    .hero__title { font-size: 40px; line-height: 1.08; }
-    .hero__lede { font-size: 17.5px; }
-    .hero__actions .btn { flex: 1 1 auto; padding: 16px 20px; }
-    .services, .recent { padding-top: 56px; }
-    .services { padding-bottom: 32px; gap: 32px; }
-    .recent { padding-bottom: 56px; gap: 32px; }
-    .services__grid, .recent__grid { grid-template-columns: minmax(0, 1fr); }
-    .svc__img { height: 220px; }
-    .svc__body { padding: 24px; }
-    .process__inner { padding-top: 56px; padding-bottom: 56px; gap: 32px; }
-    .phase { padding: 28px 24px; }
-    .phase__title { font-size: 24px; }
-    .team { padding-top: 56px; padding-bottom: 56px; gap: 36px; }
-    .compare { flex-direction: column; }
-    .compare__card { padding: 28px 24px; }
-    .inquire__inner { padding: 56px 0 0; gap: 36px; }
-    .inquire__copy { padding-inline: var(--pad); }
-    .inquire :global(.inq) { max-width: none; }
+  /* ========== Tablet ≤760 ========== */
+  @media (max-width: 760px) {
+    .hero { height: auto; aspect-ratio: 3 / 2; }
+    .hero__media :global(.photo) { object-position: 60% 55%; }
+    .hero__shade { background: linear-gradient(0deg, rgba(30,43,51,0.9) 0%, rgba(30,43,51,0.6) 55%, rgba(30,43,51,0.1) 100%); }
+    .hero__inner { padding-top: 96px; padding-bottom: 40px; }
+    .hero__actions { flex-direction: column; gap: 12px; }
+    .hero__actions .btn { width: 100%; }
+
+    .services { padding-bottom: 28px; gap: 32px; }
+    .services__grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    .svc__img { height: auto; aspect-ratio: 4 / 3; }
+
+    .recent { padding-top: 28px; gap: 32px; }
+    .recent__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .text-link--head { display: none; }
+    .text-link--foot { display: inline-flex; align-items: center; min-height: 44px; align-self: flex-start; margin-top: -16px; }
+
+    .process__inner { gap: 32px; }
+    .process__grid { flex-direction: column; }
+
+    .team { gap: 40px; }
+    .team__lede { font-size: 16.5px; }
+    .compare { gap: 12px; }
+    .compare__card { padding: 24px 20px; }
+
+    .inquire__inner { gap: 40px; }
+    .inquire__text { font-size: 16.5px; }
   }
+
+  /* ========== Phone ≤480 ========== */
+  @media (max-width: 480px) {
+    .hero { aspect-ratio: 4 / 5; }
+    .hero__inner { padding-bottom: 28px; }
+    .hero__content { gap: 14px; }
+
+    .services__grid { gap: 32px; }
+    .svc { background: none; border: 0; }
+    .svc__body { background: var(--white); border: 1px solid var(--border); border-top: 0; padding: 22px 20px 24px; }
+
+    .recent__grid { gap: 4px; }
+
+    .phase { padding: 26px 20px; }
+
+    .compare { flex-direction: column; }
+
+    .inquire__inner { padding-bottom: 0; gap: 36px; padding-inline: 0; }
+    .inquire__copy { padding-inline: var(--pad); }
+  }
+  /* Phone number stands out in white once the contact lines stack */
+  @media (max-width: 760px) { .inquire__contact .contact-phone { color: var(--white); } }
 </style>

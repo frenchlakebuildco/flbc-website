@@ -118,9 +118,7 @@ const bar = [
   .phasebar-wrap { padding-bottom: 88px; }
   .phasebar { display: grid; grid-template-columns: 4fr 2fr 3fr; gap: 8px; }
   .phasebar__item { display: flex; flex-direction: column; gap: 12px; color: var(--navy); }
-  .phasebar__item:hover { color: var(--navy); }
   .phasebar__line { height: 8px; background: var(--phase); transition: transform 140ms var(--ease); transform-origin: bottom; }
-  .phasebar__item:hover .phasebar__line { transform: scaleY(1.5); }
   .phasebar__text { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
   .phasebar__label { font-size: 12.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--phase-text); }
   .phasebar__sub { font-size: 13.5px; color: var(--text-muted); }
@@ -136,9 +134,9 @@ const bar = [
   .phase__intro { display: flex; flex-direction: column; gap: 18px; }
   .phase__rule { height: 3px; width: 56px; background: var(--phase); }
   .phase__meta { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
-  .phase__label { font-size: 12px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--phase-text); }
+  .phase__label { font-size: 12px; font-weight: 600; letter-spacing: var(--eyebrow-track); text-transform: uppercase; color: var(--phase-text); }
   .phase__tag { font-size: 11.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
-  .phase__lede { font-weight: 300; font-size: 19px; line-height: 1.6; color: var(--text-lede); }
+  .phase__lede { font-weight: 300; font-size: var(--lede); line-height: 1.6; color: var(--text-lede); }
 
   .stages { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
   .stage {
@@ -152,20 +150,30 @@ const bar = [
   .stage__title { font-family: var(--font-body); font-size: 19px; font-weight: 600; line-height: 1.3; color: var(--navy); }
   .stage__text { font-size: 16.5px; line-height: 1.65; color: var(--text-body); max-width: 62ch; }
 
-  @media (max-width: 1199px) {
-    .phase__inner { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 72px; padding-bottom: 72px; }
-    .phase__intro { max-width: 640px; }
-    .phasebar-wrap { padding-bottom: 72px; }
+  @media (hover: hover) {
+    .phasebar__item:hover { color: var(--navy); }
+    .phasebar__item:hover .phasebar__line { transform: scaleY(1.5); }
   }
-  @media (max-width: 767px) {
-    .phasebar { grid-template-columns: minmax(0, 1fr); gap: 4px; }
-    .phasebar__item { flex-direction: row; align-items: center; gap: 14px; min-height: 48px; }
-    .phasebar__line { width: 8px; height: 36px; flex: none; }
-    .phasebar__text { flex-direction: column; gap: 2px; }
-    .phasebar-wrap { padding-bottom: 48px; }
-    .phase__inner { padding-top: 56px; padding-bottom: 56px; gap: 28px; }
-    .phase__lede { font-size: 17.5px; }
-    .stage { grid-template-columns: 48px minmax(0, 1fr); gap: 14px; padding: 22px 0; }
+
+  /* Laptop: 360px intro column + list */
+  @media (max-width: 1080px) {
+    .phasebar-wrap { padding-bottom: var(--sec); }
+    .phase__inner { grid-template-columns: 360px minmax(0, 1fr); gap: 48px; padding-top: var(--sec); padding-bottom: var(--sec); }
+  }
+  /* Tablet: intro above the stage list; phase bar as drawn (labels may wrap) */
+  @media (max-width: 760px) {
+    .phasebar__text { gap: 2px 10px; }
+    .phase__inner { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+    .phase__intro { max-width: 600px; gap: 14px; }
+  }
+  /* Phone: phase bar as three stacked rows (bar + label beneath); 48px number column */
+  @media (max-width: 480px) {
+    .phasebar { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+    .phasebar__item { gap: 8px; min-height: 44px; }
+    .phasebar__label { letter-spacing: 0.14em; }
+    .phasebar__sub { font-size: 13.5px; }
+    .phase__inner { gap: 24px; }
+    .stage { grid-template-columns: 48px minmax(0, 1fr); gap: 12px; padding: 22px 0; }
     .stage__num { font-size: 26px; }
     .stage__title { font-size: 18px; }
   }

@@ -35,11 +35,27 @@
 
   --ease: cubic-bezier(0.2, 0, 0.2, 1);
   --max: 1440px;
-  --pad: 56px;
+
+  /* Responsive scale — see MOBILE.md. Breakpoints: ≤1080 laptop, ≤760 tablet, ≤480 phone */
+  --pad: 56px;          /* side padding */
+  --sec: 96px;          /* section vertical padding */
+  --h1: 58px;
+  --h2: 42px;
+  --h2-band: 32px;
+  --h3-card: 27px;
+  --lede: 20px;
+  --eyebrow-track: 0.22em;
 }
 
-@media (max-width: 1199px) { :root { --pad: 32px; } }
-@media (max-width: 767px)  { :root { --pad: 20px; } }
+@media (max-width: 1080px) {
+  :root { --pad: 40px; --sec: 72px; --h1: 46px; --h2: 36px; --h2-band: 30px; --h3-card: 24px; --lede: 19px; }
+}
+@media (max-width: 760px) {
+  :root { --pad: 28px; --sec: 56px; --h1: 36px; --h2: 30px; --h2-band: 27px; --lede: 18px; --eyebrow-track: 0.16em; }
+}
+@media (max-width: 480px) {
+  :root { --pad: 20px; --sec: 44px; --h1: 32px; --h2: 27px; --h2-band: 24px; --h3-card: 22px; --eyebrow-track: 0.14em; }
+}
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; text-wrap: pretty; }
@@ -72,7 +88,7 @@ a {
   text-decoration: none;
   transition: color 140ms var(--ease), background-color 140ms var(--ease), border-color 140ms var(--ease);
 }
-a:hover { color: var(--navy); }
+@media (hover: hover) { a:hover { color: var(--navy); } }
 
 :focus-visible {
   outline: 2px solid var(--brass);
@@ -108,7 +124,7 @@ a:hover { color: var(--navy); }
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: var(--eyebrow-track);
   text-transform: uppercase;
   color: var(--brass-text);
 }
@@ -120,27 +136,22 @@ a:hover { color: var(--navy); }
   letter-spacing: -0.005em;
   color: var(--navy);
 }
-.h1 { font-size: 58px; line-height: 1.04; }
-.h2 { font-size: 42px; line-height: 1.06; }
+.h1 { font-size: var(--h1); line-height: 1.05; }
+.h2 { font-size: var(--h2); line-height: 1.06; }
 .h2--40 { font-size: 40px; }
 .h2--38 { font-size: 38px; line-height: 1.08; }
-.h2--band { font-size: 32px; line-height: 1.1; }
+.h2--band { font-size: var(--h2-band); line-height: 1.1; }
+@media (max-width: 1080px) { .h2--40, .h2--38 { font-size: var(--h2); } }
 .on-dark { color: var(--white); }
 
 .lede {
   font-weight: 300;
-  font-size: 20px;
+  font-size: var(--lede);
   line-height: 1.6;
   color: var(--text-lede);
 }
 .body-lg { font-size: 17.5px; line-height: 1.6; color: var(--text-body); }
 
-@media (max-width: 767px) {
-  .h1 { font-size: 40px; line-height: 1.08; }
-  .h2, .h2--40, .h2--38 { font-size: 32px; line-height: 1.1; }
-  .h2--band { font-size: 28px; }
-  .lede { font-size: 18px; }
-}
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -162,12 +173,19 @@ a:hover { color: var(--navy); }
   transition: background-color 140ms var(--ease), color 140ms var(--ease), border-color 140ms var(--ease);
 }
 .btn--navy { background: var(--navy); color: var(--white); }
-.btn--navy:hover { background: var(--navy-hover); color: var(--white); }
 .btn--sand { background: var(--sand); color: var(--navy); }
-.btn--sand:hover { background: var(--white); color: var(--navy); }
 .btn--ghost-light { border: 1px solid var(--on-dark-muted); color: var(--white); background: transparent; }
-.btn--ghost-light:hover { background: var(--navy-hover); color: var(--white); }
+/* Hover colour changes are desktop-only (MOBILE.md → Touch) */
+@media (hover: hover) {
+  .btn--navy:hover { background: var(--navy-hover); color: var(--white); }
+  .btn--sand:hover { background: var(--white); color: var(--navy); }
+  .btn--ghost-light:hover { background: var(--navy-hover); color: var(--white); }
+}
 .btn[disabled] { opacity: 0.7; cursor: progress; }
+@media (max-width: 480px) {
+  .btn { min-height: 52px; padding-top: 0; padding-bottom: 0; }
+  .btn--block-phone { width: 100%; }
+}
 
 /* ---------- Section header (eyebrow + H2 left, paragraph right) ---------- */
 .section-head {
@@ -178,8 +196,8 @@ a:hover { color: var(--navy); }
 }
 .section-head__title { display: flex; flex-direction: column; gap: 14px; }
 
-@media (max-width: 767px) {
-  .section-head { flex-direction: column; align-items: flex-start; gap: 20px; }
+@media (max-width: 760px) {
+  .section-head { flex-direction: column; align-items: flex-start; gap: 16px; }
 }
 
 /* ---------- Page intro (Our Work / Process) ---------- */
@@ -193,9 +211,22 @@ a:hover { color: var(--navy); }
 }
 .page-intro__title { display: flex; flex-direction: column; gap: 18px; }
 
-@media (max-width: 1199px) {
-  .page-intro { padding-top: 72px; }
+@media (max-width: 1080px) {
+  .page-intro { padding-top: var(--sec); padding-bottom: 48px; gap: 40px; }
 }
-@media (max-width: 767px) {
-  .page-intro { flex-direction: column; align-items: flex-start; gap: 20px; padding-top: 56px; padding-bottom: 40px; }
+@media (max-width: 760px) {
+  .page-intro { flex-direction: column; align-items: flex-start; gap: 16px; padding-bottom: 32px; }
+}
+
+/* Photos that run to both screen edges on phones (cancel the side padding) */
+@media (max-width: 480px) {
+  .bleed-phone { margin-inline: calc(var(--pad) * -1); }
+}
+
+/* Contact line in the navy inquiry sections: one line on desktop, stacked on phones */
+.contact-line { display: block; }
+@media (max-width: 760px) {
+  .contact-sep { display: none; }
+  .contact-line { display: flex; flex-direction: column; }
+  .contact-line a { display: inline-flex; align-items: center; min-height: 44px; align-self: flex-start; }
 }

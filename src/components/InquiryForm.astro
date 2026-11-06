@@ -187,7 +187,6 @@ const sources = ['Yard sign', 'Referral', 'Google', 'Instagram / Facebook'];
     transition: border-color 140ms var(--ease), box-shadow 140ms var(--ease);
   }
   .field__input::placeholder { color: var(--text-muted); opacity: 1; }
-  .field__input:hover { border-color: var(--navy); }
   .field__input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 1px var(--navy); }
   .field__input[aria-invalid='true'] { border-color: var(--error); }
   .field__input[aria-invalid='true']:focus { box-shadow: 0 0 0 1px var(--error); }
@@ -214,7 +213,7 @@ const sources = ['Yard sign', 'Referral', 'Google', 'Instagram / Facebook'];
     cursor: pointer;
     transition: border-color 140ms var(--ease), background-color 140ms var(--ease);
   }
-  .drop:hover, .drop.is-dragover { border-color: var(--navy); }
+  .drop.is-dragover { border-color: var(--navy); }
   .drop.is-dragover { background: #FBF9F5; border-style: solid; }
   .drop:focus-within { outline: 2px solid var(--brass); outline-offset: 2px; }
   .drop.is-invalid { border-color: var(--error); }
@@ -226,7 +225,6 @@ const sources = ['Yard sign', 'Referral', 'Google', 'Instagram / Facebook'];
     color: var(--navy); border: 1px solid var(--navy); border-radius: 2px; padding: 10px 16px; flex: none;
     transition: background-color 140ms var(--ease), color 140ms var(--ease);
   }
-  .drop:hover .drop__btn { background: var(--navy); color: var(--white); }
 
   .thumbs { list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
   .thumbs :global(li) { position: relative; aspect-ratio: 1; background: var(--sand-deep); border: 1px solid var(--border); }
@@ -241,9 +239,15 @@ const sources = ['Yard sign', 'Referral', 'Google', 'Instagram / Facebook'];
     background: rgba(30, 43, 51, 0.85); color: var(--white); border: 0; border-radius: 2px;
     font-size: 16px; line-height: 1; cursor: pointer;
   }
-  .thumbs :global(button:hover) { background: var(--navy); }
   /* larger invisible hit area for touch */
   .thumbs :global(button::after) { content: ''; position: absolute; inset: -8px; }
+
+  @media (hover: hover) {
+    .field__input:hover { border-color: var(--navy); }
+    .drop:hover { border-color: var(--navy); }
+    .drop:hover .drop__btn { background: var(--navy); color: var(--white); }
+    .thumbs :global(button:hover) { background: var(--navy); }
+  }
 
   .inq__status {
     background: #F6E9E6; border-left: 3px solid var(--error);
@@ -258,22 +262,30 @@ const sources = ['Yard sign', 'Referral', 'Google', 'Instagram / Facebook'];
   .inq__success { display: flex; flex-direction: column; gap: 18px; padding: 24px 0; outline: none; }
   .inq__success[hidden] { display: none; }
   .inq__success-mark { width: 56px; height: 3px; background: var(--brass); }
-  .inq__success-title { font-size: 32px; line-height: 1.12; }
+  .inq__success-title { font-size: var(--h2-band); line-height: 1.12; }
   .inq__success-text { font-size: 17px; line-height: 1.65; color: var(--text-body); }
   .inq__success-text a { color: var(--lake-text); text-decoration: underline; text-underline-offset: 2px; }
 
-  @media (max-width: 1199px) {
-    .inq { width: 100%; max-width: 720px; }
+  /* Laptop: section stacks (copy above form), field pairs kept */
+  @media (max-width: 1080px) {
+    .inq { width: 100%; }
   }
-  @media (max-width: 767px) {
-    .inq { padding: 28px 20px; }
+  /* Tablet: one field per row */
+  @media (max-width: 760px) {
     .inq__row { flex-direction: column; gap: 20px; }
-    .drop { flex-direction: column; align-items: flex-start; }
-    .drop__btn { min-height: 44px; display: inline-flex; align-items: center; }
+    .inq__success-text { font-size: 16.5px; }
+  }
+  /* Phone: full-bleed panel, 52px inputs, full-width buttons */
+  @media (max-width: 480px) {
+    .inq { padding: 32px 20px 40px; }
+    .field__input { height: 52px; }
+    .field__textarea { height: 120px; min-height: 120px; }
+    .drop { flex-direction: column; align-items: stretch; gap: 14px; padding: 16px; }
+    .drop__btn { min-height: 44px; display: flex; align-items: center; justify-content: center; }
     .thumbs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .inq__foot { flex-direction: column-reverse; align-items: stretch; text-align: center; }
+    .inq__foot { flex-direction: column-reverse; align-items: stretch; text-align: center; gap: 14px; }
+    .inq__foot .btn { width: 100%; }
     .inq__note { max-width: none; }
-    .inq__success-title { font-size: 26px; }
   }
 </style>
 
