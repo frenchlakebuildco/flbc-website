@@ -3,7 +3,7 @@
 Marketing site for French Lake Build Co., built from the Claude Design handoff (`design_handoff_flbc_website`).
 
 - **Stack:** [Astro](https://astro.build) (static output) + plain CSS, self-hosted fonts (Marcellus, Mulish)
-- **Hosting:** Netlify (fully static)
+- **Hosting:** Cloudflare Pages (fully static, free plan)
 - **Inquiry form:** Buildertrend lead capture form, embedded
 - **Pages:** `/` · `/our-work` · `/process` · `/start-a-project` (+ `404`)
 
@@ -16,13 +16,16 @@ npm run build      # outputs to dist/
 npm run preview    # serve the built site
 ```
 
-Node 20+ required (Netlify builds with Node 22).
+Node 22 recommended (pinned in `.node-version`, which Cloudflare Pages uses).
 
-## Deploy to Netlify
+## Deploy to Cloudflare Pages
 
-1. Push this folder to a GitHub repository.
-2. In Netlify: **Add new site → Import an existing project**, pick the repo. Build settings come from `netlify.toml` (build `npm run build`, publish `dist`). No environment variables are needed.
-3. Point the `frenchlakebuild.com` domain at Netlify (**Domain management**) and make sure **Visitor access** is public.
+1. In Cloudflare: **Workers & Pages → Create → Pages → Connect to Git**, and pick `frenchlakebuildco/flbc-website`.
+2. Build settings: framework preset **Astro**, build command `npm run build`, build output directory `dist`. No environment variables are needed.
+3. Every push to `main` builds and publishes automatically.
+4. Custom domain: in the Pages project, **Custom domains → Set up a domain** → `frenchlakebuild.com` (and `www.frenchlakebuild.com`). For the bare domain, the domain's DNS must be managed by Cloudflare. When moving DNS, **check that the email (MX) records were imported** before switching nameservers.
+
+Security headers and asset caching are set in `public/_headers`.
 
 ## How the inquiry form works
 
@@ -53,5 +56,6 @@ On hold (see `MEET_THE_TEAM_LATER.md` in the design handoff). When it's ready: a
 
 - [x] Success-message copy approved: "Thank you — we’ll be in touch within one business day."
 - [ ] Send a test inquiry with photos and confirm it shows up as a lead in Buildertrend
-- [ ] Make Visitor access public in Netlify
-- [ ] Connect the domain; `site` in `astro.config.mjs` is set to `https://frenchlakebuild.com`
+- [ ] Connect frenchlakebuild.com in Cloudflare Pages (confirm MX records are intact)
+- [ ] Delete the old Netlify site
+- [ ] `site` in `astro.config.mjs` is set to `https://frenchlakebuild.com`
