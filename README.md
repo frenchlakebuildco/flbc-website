@@ -3,7 +3,8 @@
 Marketing site for French Lake Build Co., built from the Claude Design handoff (`design_handoff_flbc_website`).
 
 - **Stack:** [Astro](https://astro.build) (static output) + plain CSS, self-hosted fonts (Marcellus, Mulish)
-- **Hosting:** Netlify (static site + one serverless function for the inquiry form)
+- **Hosting:** Netlify (fully static)
+- **Inquiry form:** Buildertrend lead capture form, embedded
 - **Pages:** `/` · `/our-work` · `/process` · `/start-a-project` (+ `404`)
 
 ## Run it locally
@@ -20,24 +21,17 @@ Node 20+ required (Netlify builds with Node 22).
 ## Deploy to Netlify
 
 1. Push this folder to a GitHub repository.
-2. In Netlify: **Add new site → Import an existing project**, pick the repo. Build settings come from `netlify.toml` (build `npm run build`, publish `dist`, functions `netlify/functions`).
-3. Add environment variables (**Site configuration → Environment variables**), see `.env.example`:
-   | Variable | Required | Notes |
-   |---|---|---|
-   | `RESEND_API_KEY` | yes | From [resend.com](https://resend.com) (free tier is plenty). |
-   | `INQUIRY_FROM` | yes* | e.g. `French Lake Build Co. <website@frenchlakebuild.com>`. Verify `frenchlakebuild.com` in Resend (adds a few DNS records). |
-   | `INQUIRY_TO` | no | Defaults to `hello@frenchlakebuild.com`. |
-   | `PUBLIC_TURNSTILE_SITE_KEY` / `TURNSTILE_SECRET_KEY` | no | Cloudflare Turnstile spam check. Leave blank to rely on the honeypot + rate limit. |
-4. Point the `frenchlakebuild.com` domain at Netlify (**Domain management**).
-5. Send a test inquiry with a couple of photos and confirm it arrives.
+2. In Netlify: **Add new site → Import an existing project**, pick the repo. Build settings come from `netlify.toml` (build `npm run build`, publish `dist`). No environment variables are needed.
+3. Point the `frenchlakebuild.com` domain at Netlify (**Domain management**) and make sure **Visitor access** is public.
 
 ## How the inquiry form works
 
-- Shared component: `src/components/InquiryForm.astro` (Home and Start a Project use slightly different copy, per the design).
-- Client logic: `src/scripts/inquiry.ts`, which handles inline validation (`aria-describedby` errors), drag-and-drop photos with thumbnails and remove buttons, a 10-photo / 10 MB-per-photo limit, and "Sending…" / success / failure states.
-- Photos are **downscaled in the browser** (max 2000px JPEG) before upload so 10 phone photos fit within Netlify's ~6 MB function request limit. HEIC files that the browser can't decode are sent as-is.
-- Server: `netlify/functions/inquiry.mjs` (served at `POST /api/inquiry`) re-validates everything, then emails the submission via Resend with photos attached and `Reply-To` set to the homeowner.
-- Spam protection: hidden honeypot field, Netlify rate limit (5 per minute per IP), optional Turnstile.
+The "Project inquiry" form on Home and Start a Project is **Buildertrend's lead capture form**, embedded in an iframe (`src/components/BuildertrendForm.astro`). Each submission goes straight into Buildertrend as a lead, with photos. Buildertrend handles validation, spam protection (Google reCAPTCHA) and new-lead notifications.
+
+- **Fields, labels, required settings and dropdown options are managed in Buildertrend**, not in this code. Photos are intentionally required, so the team can assess a project before the first call.
+- The form is served from buildertrend.net, so its inner styling can't be changed from this site. The panel around it (heading, photo note, fallback phone/email line) is ours.
+- `btClientContactForm.js` from Buildertrend resizes the iframe to fit the form.
+- If Buildertrend gives you new embed code (for example after regenerating it), replace `BT_FORM_URL` in `BuildertrendForm.astro`.
 
 ## Editing content
 
@@ -58,6 +52,6 @@ On hold (see `MEET_THE_TEAM_LATER.md` in the design handoff). When it's ready: a
 ## Before launch
 
 - [x] Success-message copy approved: "Thank you — we’ll be in touch within one business day."
-- [ ] Set environment variables and verify the sender domain in Resend
-- [ ] Send a test inquiry with photos
+- [ ] Send a test inquiry with photos and confirm it shows up as a lead in Buildertrend
+- [ ] Make Visitor access public in Netlify
 - [ ] Connect the domain; `site` in `astro.config.mjs` is set to `https://frenchlakebuild.com`
