@@ -85,11 +85,11 @@ export function initInquiryForm(root: HTMLElement) {
   };
 
   const validators: Record<string, (v: string) => string> = {
-    name: (v) => (v.trim() ? '' : 'Please enter your name.'),
+    first_name: (v) => (v.trim() ? '' : 'Please enter your first name.'),
+    last_name: (v) => (v.trim() ? '' : 'Please enter your last name.'),
     email: (v) => (!v.trim() ? 'Please enter your email address.' : EMAIL_RE.test(v.trim()) ? '' : 'Please enter a valid email address, like name@example.com.'),
     phone: (v) => (!v.trim() ? 'Please enter a phone number.' : v.replace(/\D/g, '').length >= 10 ? '' : 'Please enter a full phone number, including area code.'),
     address: (v) => (v.trim() ? '' : 'Please enter the property address.'),
-    project_type: (v) => (v ? '' : 'Please choose a project type.'),
     goals: (v) => (v.trim() ? '' : 'Please tell us a little about your project.'),
     inspiration_url: (v) => (normaliseUrl(v) === null ? 'Please enter a full link, like https://pinterest.com/…' : ''),
   };

@@ -18,11 +18,11 @@ const MAX_FILE_BYTES = 10 * 1024 * 1024;
 const MAX_TEXT = 5000;
 
 const FIELDS = [
-  ['name', 'Name', true],
+  ['first_name', 'First name', true],
+  ['last_name', 'Last name', true],
   ['email', 'Email', true],
   ['phone', 'Phone', true],
   ['address', 'Property address', true],
-  ['project_type', 'Project type', true],
   ['square_footage', 'Approx. square footage', false],
   ['budget', 'Budget range', false],
   ['goals', 'Project goals', true],
@@ -135,7 +135,7 @@ export default async (req, context) => {
       from,
       to: [to],
       reply_to: values.email,
-      subject: `New inquiry: ${values.name} — ${values.project_type}`,
+      subject: `New inquiry: ${values.first_name} ${values.last_name}`,
       html,
       text,
       attachments,

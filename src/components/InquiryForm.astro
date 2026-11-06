@@ -14,7 +14,6 @@ const copy = variant === 'home'
 const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 const id = (name: string) => `inq-${name}`;
 
-const projectTypes = ['Design Services', 'Remodel or Addition', 'New Construction'];
 const sqft = ['Under 500 sq ft', '500–1,000 sq ft', '1,000–2,000 sq ft', '2,000–3,000 sq ft', '3,000+ sq ft', 'Not sure yet'];
 const budgets = ['$75–150k', '$150–250k', '$250–500k', '$500k–1M', '$1M+', 'Not sure yet'];
 const sources = ['Yard sign', 'Referral', 'Google', 'Instagram / Facebook'];
@@ -36,37 +35,34 @@ const sources = ['Yard sign', 'Referral', 'Google', 'Instagram / Facebook'];
 
     <div class="inq__row">
       <div class="field">
-        <label for={id('name')} class="field__label">Name<span class="req" aria-hidden="true">*</span></label>
-        <input class="field__input" type="text" id={id('name')} name="name" required autocomplete="name" aria-describedby={id('name-err')} />
-        <p class="field__error" id={id('name-err')} hidden></p>
+        <label for={id('first')} class="field__label">First name<span class="req" aria-hidden="true">*</span></label>
+        <input class="field__input" type="text" id={id('first')} name="first_name" required autocomplete="given-name" aria-describedby={id('first-err')} />
+        <p class="field__error" id={id('first-err')} hidden></p>
       </div>
       <div class="field">
-        <label for={id('email')} class="field__label">Email<span class="req" aria-hidden="true">*</span></label>
-        <input class="field__input" type="email" id={id('email')} name="email" required autocomplete="email" inputmode="email" aria-describedby={id('email-err')} />
-        <p class="field__error" id={id('email-err')} hidden></p>
+        <label for={id('last')} class="field__label">Last name<span class="req" aria-hidden="true">*</span></label>
+        <input class="field__input" type="text" id={id('last')} name="last_name" required autocomplete="family-name" aria-describedby={id('last-err')} />
+        <p class="field__error" id={id('last-err')} hidden></p>
       </div>
     </div>
 
     <div class="inq__row">
       <div class="field">
+        <label for={id('email')} class="field__label">Email<span class="req" aria-hidden="true">*</span></label>
+        <input class="field__input" type="email" id={id('email')} name="email" required autocomplete="email" inputmode="email" aria-describedby={id('email-err')} />
+        <p class="field__error" id={id('email-err')} hidden></p>
+      </div>
+      <div class="field">
         <label for={id('phone')} class="field__label">Phone<span class="req" aria-hidden="true">*</span></label>
         <input class="field__input" type="tel" id={id('phone')} name="phone" required autocomplete="tel" aria-describedby={id('phone-err')} />
         <p class="field__error" id={id('phone-err')} hidden></p>
       </div>
-      <div class="field">
-        <label for={id('address')} class="field__label">Property address<span class="req" aria-hidden="true">*</span></label>
-        <input class="field__input" type="text" id={id('address')} name="address" required autocomplete="street-address" aria-describedby={id('address-err')} />
-        <p class="field__error" id={id('address-err')} hidden></p>
-      </div>
     </div>
 
     <div class="field">
-      <label for={id('type')} class="field__label">Project type<span class="req" aria-hidden="true">*</span></label>
-      <select class="field__input field__select" id={id('type')} name="project_type" required aria-describedby={id('type-err')}>
-        <option value="" disabled selected hidden>Select</option>
-        {projectTypes.map((o) => <option>{o}</option>)}
-      </select>
-      <p class="field__error" id={id('type-err')} hidden></p>
+      <label for={id('address')} class="field__label">Property address<span class="req" aria-hidden="true">*</span></label>
+      <input class="field__input" type="text" id={id('address')} name="address" required autocomplete="street-address" aria-describedby={id('address-err')} />
+      <p class="field__error" id={id('address-err')} hidden></p>
     </div>
 
     <div class="inq__row">
