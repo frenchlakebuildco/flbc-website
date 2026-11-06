@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Page not found | French Lake Build Co." description="The page you’re looking for couldn’t be found.">
+  <section class="wrap nf">
+    <div class="eyebrow">Page not found</div>
+    <h1 class="display h1">We couldn’t find that page</h1>
+    <p class="lede nf__text">It may have moved. Here are a few places to start instead.</p>
+    <div class="nf__actions">
+      <a href="/" class="btn btn--navy">Home</a>
+      <a href="/our-work" class="btn btn--navy">Our Work</a>
+      <a href="/start-a-project" class="btn btn--navy">Start a project</a>
+    </div>
+  </section>
+</Base>
+<style>
+  .nf { padding-top: 120px; padding-bottom: 140px; display: flex; flex-direction: column; gap: 20px; }
+  .nf__text { max-width: 44ch; }
+  .nf__actions { display: flex; gap: 14px; flex-wrap: wrap; padding-top: 12px; }
+  @media (max-width: 767px) { .nf { padding-top: 64px; padding-bottom: 80px; } }
+</style>

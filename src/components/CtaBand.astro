@@ -1,0 +1,29 @@
+---
+interface Props { eyebrow: string; title: string; text: string; }
+const { eyebrow, title, text } = Astro.props;
+---
+<section class="cta">
+  <div class="wrap cta__inner">
+    <div class="cta__copy">
+      <div class="eyebrow eyebrow--light">{eyebrow}</div>
+      <h2 class="display h2 on-dark">{title}</h2>
+      <p class="cta__text">{text}</p>
+    </div>
+    <a href="/start-a-project" class="btn btn--sand cta__btn">Start a project</a>
+  </div>
+</section>
+
+<style>
+  .cta { background: var(--navy); }
+  .cta__inner { padding-top: 80px; padding-bottom: 80px; display: flex; justify-content: space-between; align-items: center; gap: 40px; }
+  .cta__copy { display: flex; flex-direction: column; gap: 12px; }
+  .cta__text { font-weight: 300; font-size: 18px; line-height: 1.6; color: var(--on-dark-body); max-width: 52ch; }
+  .cta__btn { flex: none; }
+
+  @media (max-width: 1199px) {
+    .cta__inner { flex-direction: column; align-items: flex-start; gap: 28px; padding-top: 64px; padding-bottom: 64px; }
+  }
+  @media (max-width: 767px) {
+    .cta__inner { padding-top: 56px; padding-bottom: 56px; }
+  }
+</style>

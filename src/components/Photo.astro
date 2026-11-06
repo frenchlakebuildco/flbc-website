@@ -1,0 +1,38 @@
+---
+/**
+ * Responsive photo that fills its parent with object-fit: cover.
+ * Outputs WebP with a JPG fallback at several widths.
+ */
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  sizes: string;
+  widths?: number[];
+  eager?: boolean;
+  class?: string;
+}
+const { src, alt, sizes, widths = [480, 800, 1200, 1600], eager = false, class: className } = Astro.props;
+const usable = widths.filter((w) => w <= src.width);
+---
+<Picture
+  src={src}
+  alt={alt}
+  formats={['webp']}
+  fallbackFormat="jpg"
+  widths={usable.length ? usable : [src.width]}
+  sizes={sizes}
+  quality={72}
+  loading={eager ? 'eager' : 'lazy'}
+  decoding={eager ? 'sync' : 'async'}
+  fetchpriority={eager ? 'high' : undefined}
+  class:list={['photo', className]}
+  pictureAttributes={{ class: 'photo-wrap' }}
+/>
+
+<style is:global>
+  .photo-wrap { display: block; width: 100%; height: 100%; }
+  .photo { display: block; width: 100%; height: 100%; object-fit: cover; }
+</style>

@@ -1,0 +1,308 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import PortalBand from '../components/PortalBand.astro';
+import InquiryForm from '../components/InquiryForm.astro';
+import { work } from '../lib/work';
+
+const services = [
+  { n: 7, alt: 'Kitchen with island and custom cabinetry', title: 'Kitchens & living spaces', text: 'Kitchens opened gracefully to the rooms around them — often reimagined together with the living spaces and mudroom.' },
+  { n: 5, alt: 'Primary bath with wood vanity', title: 'Primary suites & baths', text: 'Bedroom, bath and closet planned together as one retreat, with custom cabinetry and tile work built to last.' },
+  { n: 16, alt: 'Breakfast nook with tall windows', title: 'Additions & second stories', text: 'Additions and second stories, matched so carefully to the original trim, roofline, and brick that they feel as if they were always there.' },
+  { n: 23, alt: 'Remodeled kitchen with island and stair', title: 'Whole-home remodels', text: 'A complete renewal — every room and every system — for those who love their home and intend to stay.' },
+];
+
+const recent = [
+  { n: 4, alt: 'Kitchen, range and island' },
+  { n: 2, alt: 'Warm-wood bath, closet into bath' },
+  { n: 27, alt: 'Entry, stair and arched niche' },
+  { n: 34, alt: 'Guest bath, green tile shower' },
+];
+
+const phases = [
+  { cls: 'explore', label: 'Phase one · Explore', title: 'Getting acquainted', text: 'It begins with a complimentary visit to your home. We listen closely, then return with an initial concept and a directional estimate.' },
+  { cls: 'design', label: 'Phase two · Design & plan', title: 'Shaping the details', text: 'Together, we refine layouts, finishes, and selections, so your plan is complete and fully priced before construction begins.' },
+  { cls: 'build', label: 'Phase three · Build', title: 'Building with care', text: 'The same team that designed your home builds it — keeping you informed each week, with one familiar point of contact throughout.' },
+];
+
+const points = [
+  ['One agreement.', 'Design and construction under a single agreement, with one familiar point of contact throughout.'],
+  ['One clear budget.', 'Pricing is refined as the design takes shape, so the number you approve is the number we build to.'],
+  ['Calm through the unexpected.', 'Older homes sometimes hold surprises. When they do, we’ll talk it through with you and resolve it promptly.'],
+  ['Engineering, handled.', 'When your project calls for structural or permit drawings, we coordinate our trusted engineers — and an architect, when needed. If you already work with an architect, we’re glad to collaborate.'],
+];
+---
+<Base
+  title="French Lake Build Co. — Design-Build Remodeling, Twin Cities"
+  description="Your home, thoughtfully reimagined — designed and built by the same team, from the first sketch to the final walkthrough. Design-build remodeling across the greater Twin Cities."
+>
+  <!-- 1. Hero -->
+  <section class="hero">
+    <div class="hero__media">
+      <Photo src={work(22)} alt="" sizes="100vw" widths={[800, 1200, 1600, 2000]} eager />
+    </div>
+    <div class="hero__shade" aria-hidden="true"></div>
+    <div class="wrap hero__inner">
+      <div class="hero__content">
+        <div class="eyebrow eyebrow--light">Design &amp; build · Greater Twin Cities</div>
+        <h1 class="display hero__title">Thoughtful design. Precision build.</h1>
+        <p class="hero__lede">Your home, thoughtfully reimagined — designed and built by the same team, from the first sketch to the final walkthrough.</p>
+        <div class="hero__actions">
+          <a href="/start-a-project" class="btn btn--sand">Start a project</a>
+          <a href="/our-work" class="btn btn--ghost-light">See our work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Services -->
+  <section class="wrap services" aria-labelledby="services-title">
+    <div class="section-head">
+      <div class="section-head__title">
+        <div class="eyebrow">Services</div>
+        <h2 class="display h2" id="services-title">Where we focus</h2>
+      </div>
+      <p class="body-lg services__intro">Every home we take on is guided by a dedicated designer and project manager, alongside trade partners we know and trust.</p>
+    </div>
+    <div class="services__grid">
+      {services.map((s) => (
+        <article class="svc">
+          <div class="svc__img"><Photo src={work(s.n)} alt={s.alt} sizes="(min-width: 1200px) 320px, (min-width: 768px) 50vw, 100vw" widths={[400, 640, 960]} /></div>
+          <div class="svc__body">
+            <h3 class="display svc__title">{s.title}</h3>
+            <p class="svc__text">{s.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- 3. Recent work -->
+  <section class="wrap recent" aria-labelledby="recent-title">
+    <div class="section-head">
+      <div class="section-head__title">
+        <div class="eyebrow">Our work</div>
+        <h2 class="display h2" id="recent-title">Recent work</h2>
+      </div>
+      <a href="/our-work" class="text-link">See our work →</a>
+    </div>
+    <div class="recent__grid">
+      {recent.map((r) => (
+        <a href="/our-work" class="recent__tile">
+          <Photo src={work(r.n)} alt={r.alt} sizes="(min-width: 1200px) 330px, (min-width: 768px) 50vw, 100vw" widths={[400, 660, 1000]} />
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 4. Process summary -->
+  <section class="process" aria-labelledby="process-title">
+    <div class="wrap process__inner">
+      <div class="section-head">
+        <div class="section-head__title process__head">
+          <div class="eyebrow">Process</div>
+          <h2 class="display h2" id="process-title">Three phases, thoughtfully guided</h2>
+        </div>
+        <p class="body-lg process__intro">At our first visit, we’ll walk you through each step in detail, so you’ll know exactly what to expect long before anything is signed.</p>
+      </div>
+      <div class="process__grid">
+        {phases.map((p) => (
+          <a href={`/process#${p.cls}`} class:list={['phase', `phase--${p.cls}`]}>
+            <span class="phase__label">{p.label}</span>
+            <h3 class="display phase__title">{p.title}</h3>
+            <p class="phase__text">{p.text}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Client portal -->
+  <PortalBand
+    variant="home"
+    eyebrow="Your project"
+    text="Plans, selections, schedules, and progress photos are always current in your private Buildertrend portal — on the web or in the app, whenever you’d like to look in."
+  />
+
+  <!-- 6. One team -->
+  <section class="wrap team" aria-labelledby="team-title">
+    <div class="team__copy">
+      <div class="eyebrow">Design–build</div>
+      <h2 class="display h2 h2--40 team__title" id="team-title">One team, start to finish</h2>
+      <p class="team__lede">The people who plan your layout and help select your finishes are the same people who build it. The plan you approve is already priced, considered, and ready for the site.</p>
+      <ul class="team__points">
+        {points.map(([b, t]) => (
+          <li><span class="team__dot" aria-hidden="true"></span><div><strong>{b}</strong> {t}</div></li>
+        ))}
+      </ul>
+    </div>
+    <div class="compare">
+      <div class="compare__card compare__card--db">
+        <h3 class="compare__label">Design–build</h3>
+        <ul>
+          <li>One contract</li>
+          <li>Pricing refined during design</li>
+          <li>Builder involved from the first layout</li>
+          <li>One point of contact</li>
+        </ul>
+      </div>
+      <div class="compare__card compare__card--sep">
+        <h3 class="compare__label">Hired separately</h3>
+        <ul>
+          <li>Designer and contractor on separate contracts</li>
+          <li>Price known only after bidding</li>
+          <li>Builder inherits the plan</li>
+          <li>Coordination rests with you</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Inquiry -->
+  <section class="inquire" id="inquire" aria-labelledby="inquire-title">
+    <div class="wrap inquire__inner">
+      <div class="inquire__copy">
+        <div class="eyebrow eyebrow--light">Begin a conversation</div>
+        <h2 class="display h2 h2--40 on-dark inquire__title" id="inquire-title">We’d love to hear about your home</h2>
+        <p class="inquire__text">Every note is read personally by a member of our team, and you’ll hear from us within one business day. If it feels like a good fit, we’ll arrange a complimentary visit to your home.</p>
+        <div class="inquire__contact">
+          <div><a href="tel:+19523338665">952-333-8665</a> · <a href="mailto:hello@frenchlakebuild.com">hello@frenchlakebuild.com</a></div>
+          <div>MN Lic. BC810479 · fully insured</div>
+        </div>
+      </div>
+      <InquiryForm variant="home" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero */
+  .hero { position: relative; height: 620px; overflow: hidden; background: var(--navy); }
+  .hero__media { position: absolute; inset: 0; }
+  .hero__shade {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(30,43,51,0.86) 0%, rgba(30,43,51,0.6) 46%, rgba(30,43,51,0.08) 100%);
+  }
+  .hero__inner { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 56px; }
+  .hero__content { display: flex; flex-direction: column; gap: 18px; max-width: 660px; }
+  .hero__title { font-size: 58px; line-height: 1.06; color: var(--white); }
+  .hero__lede { font-weight: 300; font-size: 20px; line-height: 1.6; color: var(--on-dark-body); max-width: 52ch; }
+  .hero__actions { display: flex; gap: 14px; padding-top: 8px; flex-wrap: wrap; }
+
+  /* Services */
+  .services { padding-top: 96px; padding-bottom: 48px; display: flex; flex-direction: column; gap: 44px; }
+  .services__intro { max-width: 40ch; }
+  .services__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+  .svc { background: var(--white); border: 1px solid var(--border); display: flex; flex-direction: column; }
+  .svc__img { height: 240px; overflow: hidden; }
+  .svc__body { padding: 28px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .svc__title { font-size: 21px; line-height: 1.12; }
+  .svc__text { font-size: 16.5px; line-height: 1.6; color: var(--text-body); }
+
+  /* Recent work */
+  .recent { padding-top: 48px; padding-bottom: 96px; display: flex; flex-direction: column; gap: 44px; }
+  .text-link { font-size: 12.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lake-text); white-space: nowrap; }
+  .recent__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .recent__tile { display: block; aspect-ratio: 4 / 5; overflow: hidden; }
+  .recent__tile :global(.photo) { transition: transform 600ms var(--ease); }
+  .recent__tile:hover :global(.photo) { transform: scale(1.025); }
+
+  /* Process */
+  .process { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .process__inner { padding-top: 96px; padding-bottom: 96px; display: flex; flex-direction: column; gap: 44px; }
+  .process__head { max-width: 700px; }
+  .process__head .h2 { max-width: 24ch; }
+  .process__intro { max-width: 40ch; }
+  .process__grid { display: flex; gap: 28px; align-items: stretch; }
+  .phase {
+    flex: 1; background: var(--sand); border: 1px solid var(--border); border-top-width: 3px;
+    padding: 34px 32px; display: flex; flex-direction: column; gap: 14px; color: var(--navy);
+    transition: background-color 140ms var(--ease);
+  }
+  .phase:hover { color: var(--navy); background: #F8F4EE; }
+  .phase--explore { border-top-color: var(--lake); }
+  .phase--design { border-top-color: var(--brass); }
+  .phase--build { border-top-color: var(--navy); }
+  .phase__label { font-size: 11.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+  .phase--explore .phase__label { color: var(--lake-text); }
+  .phase--design .phase__label { color: var(--brass-text); }
+  .phase--build .phase__label { color: var(--navy); }
+  .phase__title { font-size: 27px; line-height: 1.12; }
+  .phase__text { font-size: 16.5px; line-height: 1.6; color: var(--text-body); }
+
+  /* One team */
+  .team { padding-top: 96px; padding-bottom: 96px; display: flex; gap: 64px; align-items: center; }
+  .team__copy { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+  .team__title { max-width: 20ch; }
+  .team__lede { font-size: 17.5px; line-height: 1.65; color: var(--text-body); max-width: 46ch; }
+  .team__points { list-style: none; margin: 0; padding: 8px 0 0; display: flex; flex-direction: column; gap: 16px; }
+  .team__points li { display: flex; gap: 14px; align-items: flex-start; font-size: 16.5px; line-height: 1.6; color: var(--text-body); }
+  .team__points strong { font-size: 15px; font-weight: 600; color: var(--navy); }
+  .team__dot { width: 10px; height: 10px; background: var(--lake); margin-top: 7px; flex: none; }
+
+  .compare { width: 620px; flex: none; display: flex; gap: 20px; }
+  .compare__card { flex: 1; padding: 32px; display: flex; flex-direction: column; gap: 18px; }
+  .compare__card--db { background: var(--navy); }
+  .compare__card--sep { background: var(--sand-deep); border: 1px solid var(--border); }
+  .compare__label { font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; line-height: 1.4; }
+  .compare__card--db .compare__label { color: var(--brass-light); }
+  .compare__card--sep .compare__label { color: var(--text-muted); }
+  .compare ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 15.5px; line-height: 1.5; }
+  .compare li { padding-bottom: 12px; border-bottom: 1px solid; }
+  .compare li:last-child { padding-bottom: 0; border-bottom: 0; }
+  .compare__card--db ul { color: var(--on-dark-muted); }
+  .compare__card--db li { border-color: var(--rule-dark); }
+  .compare__card--sep ul { color: var(--text-muted); }
+  .compare__card--sep li { border-color: var(--border); }
+
+  /* Inquiry */
+  .inquire { background: var(--navy); }
+  .inquire__inner { padding-top: 88px; padding-bottom: 88px; display: flex; gap: 72px; }
+  .inquire__copy { flex: 1; display: flex; flex-direction: column; gap: 22px; }
+  .inquire__title { max-width: 20ch; }
+  .inquire__text { font-size: 17.5px; line-height: 1.65; color: var(--on-dark-body); max-width: 44ch; }
+  .inquire__contact {
+    display: flex; flex-direction: column; gap: 14px; padding-top: 24px; border-top: 1px solid var(--rule-dark);
+    font-size: 16px; line-height: 1.6; color: var(--on-dark-muted);
+  }
+  .inquire__contact a { color: var(--on-dark-muted); }
+  .inquire__contact a:hover { color: var(--white); }
+
+  /* ---------- Tablet ---------- */
+  @media (max-width: 1199px) {
+    .services__grid, .recent__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .process__grid { flex-direction: column; gap: 20px; }
+    .team { flex-direction: column; align-items: stretch; gap: 48px; }
+    .compare { width: 100%; }
+    .inquire__inner { flex-direction: column; gap: 48px; }
+    .services, .recent { padding-top: 72px; }
+    .recent, .team { padding-bottom: 72px; }
+    .process__inner { padding-top: 72px; padding-bottom: 72px; }
+    .inquire__inner { padding-top: 72px; padding-bottom: 72px; }
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 767px) {
+    .hero { height: 520px; }
+    .hero__shade { background: linear-gradient(0deg, rgba(30,43,51,0.9) 0%, rgba(30,43,51,0.65) 55%, rgba(30,43,51,0.25) 100%); }
+    .hero__inner { padding-bottom: 36px; }
+    .hero__title { font-size: 40px; line-height: 1.08; }
+    .hero__lede { font-size: 17.5px; }
+    .hero__actions .btn { flex: 1 1 auto; padding: 16px 20px; }
+    .services, .recent { padding-top: 56px; }
+    .services { padding-bottom: 32px; gap: 32px; }
+    .recent { padding-bottom: 56px; gap: 32px; }
+    .services__grid, .recent__grid { grid-template-columns: minmax(0, 1fr); }
+    .svc__img { height: 220px; }
+    .svc__body { padding: 24px; }
+    .process__inner { padding-top: 56px; padding-bottom: 56px; gap: 32px; }
+    .phase { padding: 28px 24px; }
+    .phase__title { font-size: 24px; }
+    .team { padding-top: 56px; padding-bottom: 56px; gap: 36px; }
+    .compare { flex-direction: column; }
+    .compare__card { padding: 28px 24px; }
+    .inquire__inner { padding: 56px 0 0; gap: 36px; }
+    .inquire__copy { padding-inline: var(--pad); }
+    .inquire :global(.inq) { max-width: none; }
+  }
+</style>

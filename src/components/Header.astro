@@ -1,0 +1,126 @@
+---
+import Logo from './Logo.astro';
+interface Props { current?: 'work' | 'process' | 'start' | null; }
+const { current = null } = Astro.props;
+const links = [
+  { href: '/our-work', label: 'Our Work', key: 'work' },
+  { href: '/process', label: 'Process', key: 'process' },
+];
+---
+<div class="utility">
+  <div class="wrap utility__inner">
+    <div class="utility__left">Serving homeowners across the greater Twin Cities</div>
+    <div class="utility__right">
+      <span class="utility__lic">MN Lic. BC810479</span>
+      <a href="tel:+19523338665" class="utility__phone">952-333-8665</a>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <Logo />
+    <nav class="nav" aria-label="Main">
+      <ul class="nav__links" id="nav-links">
+        {links.map((l) => (
+          <li>
+            <a href={l.href} class="nav__link" aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>
+          </li>
+        ))}
+      </ul>
+      <a href="/start-a-project" class="nav__cta" aria-current={current === 'start' ? 'page' : undefined}>Start a project</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* Utility bar */
+  .utility { background: var(--navy-deep); }
+  .utility__inner {
+    padding-top: 9px; padding-bottom: 9px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    font-size: 11.5px; font-weight: 500; color: var(--on-dark-muted); line-height: 1.4;
+  }
+  .utility__left { letter-spacing: 0.1em; text-transform: uppercase; }
+  .utility__right { display: flex; gap: 28px; align-items: center; letter-spacing: 0.08em; }
+  .utility__phone { color: var(--white); }
+  .utility__phone:hover { color: var(--brass-light); }
+
+  /* Header */
+  .site-header { background: var(--sand); border-bottom: 1px solid var(--border); position: relative; z-index: 20; }
+  .site-header__inner {
+    padding-top: 22px; padding-bottom: 22px;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+  .nav {
+    display: flex; align-items: center; gap: 30px;
+    font-size: 12.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .nav__links { display: flex; gap: 30px; list-style: none; margin: 0; padding: 0; }
+  .nav__link { color: var(--navy); padding-bottom: 3px; border-bottom: 2px solid transparent; }
+  .nav__link:hover { color: var(--navy); border-bottom-color: var(--border); }
+  .nav__link[aria-current='page'] { border-bottom-color: var(--navy); }
+  .nav__cta {
+    background: var(--navy); color: var(--white);
+    padding: 14px 24px; border-radius: 2px; line-height: 1.2;
+  }
+  .nav__cta:hover { background: var(--navy-hover); color: var(--white); }
+  .nav__toggle { display: none; }
+
+  @media (max-width: 767px) {
+    .utility__left, .utility__lic { display: none; }
+    .utility__inner { justify-content: flex-end; padding-top: 0; padding-bottom: 0; }
+    .utility__phone { display: inline-flex; align-items: center; min-height: 36px; }
+
+    .site-header__inner { padding-top: 14px; padding-bottom: 14px; gap: 12px; }
+    .nav { gap: 8px; }
+    .nav__cta { padding: 13px 14px; font-size: 11.5px; min-height: 44px; display: inline-flex; align-items: center; }
+    .nav__toggle {
+      display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+      width: 44px; height: 44px; padding: 0 11px; background: transparent;
+      border: 1px solid var(--border); border-radius: 2px; cursor: pointer;
+    }
+    .nav__toggle span { display: block; height: 1.5px; background: var(--navy); transition: transform 140ms var(--ease), opacity 140ms var(--ease); }
+    .nav__toggle[aria-expanded='true'] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav__toggle[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+    .nav__toggle[aria-expanded='true'] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .nav__links {
+      display: none;
+      position: absolute; left: 0; right: 0; top: 100%;
+      flex-direction: column; gap: 0;
+      background: var(--sand); border-bottom: 1px solid var(--border);
+      padding: 4px var(--pad) 12px;
+    }
+    .nav__links.is-open { display: flex; }
+    .nav__links li + li { border-top: 1px solid var(--border); }
+    .nav__link { display: flex; align-items: center; min-height: 52px; padding: 0; border-bottom: 0; font-size: 13px; }
+    .nav__link[aria-current='page'] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+  }
+  @media (max-width: 420px) {
+    .site-header__inner { gap: 8px; }
+    .nav { gap: 6px; }
+    .nav__cta { padding: 13px 12px; letter-spacing: 0.08em; }
+  }
+  @media (max-width: 374px) {
+    :global(.logo--header .logo__text) { display: none; }
+    :global(.logo--header .logo__mark) { width: 42px; height: 42px; }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.nav__toggle');
+  const list = document.getElementById('nav-links');
+  if (toggle && list) {
+    const set = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      list.classList.toggle('is-open', open);
+    };
+    toggle.addEventListener('click', () => set(toggle.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+    window.matchMedia('(min-width: 768px)').addEventListener('change', () => set(false));
+  }
+</script>
