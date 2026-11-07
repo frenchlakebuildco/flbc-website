@@ -56,6 +56,7 @@ On hold (see `MEET_THE_TEAM_LATER.md` in the design handoff). When it's ready: a
 
 - [x] Success-message copy approved: "Thank you — we’ll be in touch within one business day."
 - [ ] Send a test inquiry with photos and confirm it shows up as a lead in Buildertrend
-- [ ] Connect frenchlakebuild.com to the Cloudflare Worker (confirm email records are intact)
-- [ ] Delete the old Netlify site
-- [ ] `site` in `astro.config.mjs` is set to `https://frenchlakebuild.com`
+- [x] Connect frenchlakebuild.com to the Cloudflare Worker (email records confirmed intact); www redirects to the bare domain; Always Use HTTPS on
+- [x] Delete the old Netlify site
+- [x] `site` in `astro.config.mjs` is set to `https://frenchlakebuild.com`
+- [ ] Re-enable DNSSEC: turn it on in Cloudflare first (DNS → Settings), then add the DS record at Squarespace
