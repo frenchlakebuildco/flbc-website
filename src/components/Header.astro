@@ -4,7 +4,7 @@ interface Props { current?: 'work' | 'process' | 'start' | null; }
 const { current = null } = Astro.props;
 const links = [
   { href: '/our-work', label: 'Our Work', key: 'work' },
-  { href: '/process', label: 'Process', key: 'process' },
+  { href: '/process', label: 'Our Process', key: 'process' },
 ];
 // Menu panel rows (≤760). Add "Meet the team" after Process when that page launches.
 const menuRows = [

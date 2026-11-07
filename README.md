@@ -51,7 +51,7 @@ To add a photo: drop `work-35.jpg` into `src/assets/work/` and add `[35, 'Alt te
 
 ## Phase 2: Meet the Team
 
-On hold (see `MEET_THE_TEAM_LATER.md` in the design handoff). When it's ready: add `src/pages/meet-the-team.astro`, add the nav link in `Header.astro` (between Process and Start a project) and the footer "Firm" link in `Footer.astro`, and add the URL to `public/sitemap.xml`.
+On hold (see `MEET_THE_TEAM_LATER.md` in the design handoff). When it's ready: add `src/pages/meet-the-team.astro`, add the nav link in `Header.astro` (between Our Process and Start a project) and a footer link in `Footer.astro`, and add the URL to `public/sitemap.xml`.
 
 ## Before launch
 
