@@ -54,7 +54,6 @@ On hold (see `MEET_THE_TEAM_LATER.md` in the design handoff). When it's ready: a
 
 ## Before launch
 
-- [x] Success-message copy approved: "Thank you — we’ll be in touch within one business day."
 - [ ] Send a test inquiry with photos and confirm it shows up as a lead in Buildertrend
 - [x] Connect frenchlakebuild.com to the Cloudflare Worker (email records confirmed intact); www redirects to the bare domain; Always Use HTTPS on
 - [x] Delete the old Netlify site
