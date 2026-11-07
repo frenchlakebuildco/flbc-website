@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600&display=swap');
+
+/* French Lake Build Co. — Buildertrend contact form styling.
+   Paste this whole file into Buildertrend's contact form "Custom CSS" setting.
+   Kept in the website repo (buildertrend/form-custom.css) as the source copy;
+   it is not used by the website build. */
+
+#leads-contact-form,
+#leads-contact-form input,
+#leads-contact-form select,
+#leads-contact-form textarea,
+.confirmation {
+  font-family: 'Mulish', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  color: #1E2B33;
+}
+
+/* Spacing between fields */
+#leads-contact-form .form-field { margin-bottom: 20px; }
+
+/* Labels: small uppercase, muted */
+#leads-contact-form .field-label {
+  float: none;
+  margin-bottom: 7px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #5F676C;
+  line-height: 1.3;
+}
+#leads-contact-form .field-label label { padding-right: 0; display: flex; align-items: baseline; }
+#leads-contact-form .required-mark {
+  float: none;
+  order: 2; /* Buildertrend puts the star first in the markup; show it after the label text */
+  margin-left: 3px;
+  color: #846638;
+}
+
+/* Text fields, selects, text areas */
+#leads-contact-form input[type=text],
+#leads-contact-form input[type=email],
+#leads-contact-form select,
+#leads-contact-form textarea {
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid #7E868B !important;
+  border-radius: 2px;
+  background-color: #FFFFFF;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #1E2B33;
+  box-shadow: none;
+  transition: border-color 140ms, box-shadow 140ms;
+}
+#leads-contact-form select { padding-right: 40px; cursor: pointer; }
+#leads-contact-form textarea { height: 96px; min-height: 96px; padding: 12px 14px; line-height: 1.5; }
+#leads-contact-form input[type=text]:focus,
+#leads-contact-form input[type=email]:focus,
+#leads-contact-form select:focus,
+#leads-contact-form textarea:focus {
+  outline: none;
+  border-color: #1E2B33 !important;
+  box-shadow: 0 0 0 1px #1E2B33;
+}
+
+/* Photo upload: outlined "Choose files" button */
+#leads-contact-form input[type=file] {
+  font-size: 15px;
+  color: #4A5258;
+  width: 100%;
+}
+#leads-contact-form input[type=file]::file-selector-button {
+  margin-right: 14px;
+  padding: 11px 16px;
+  border: 1px solid #1E2B33;
+  border-radius: 2px;
+  background: #FFFFFF;
+  color: #1E2B33;
+  font-family: 'Mulish', system-ui, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 140ms, color 140ms;
+}
+#leads-contact-form input[type=file]::file-selector-button:hover { background: #1E2B33; color: #FFFFFF; }
+
+/* Submit button: navy, uppercase */
+#leads-contact-form .button-submit {
+  width: auto;
+  margin-top: 8px;
+  padding: 18px 32px;
+  border: none;
+  border-radius: 2px;
+  background: #1E2B33;
+  color: #FFFFFF;
+  font-family: 'Mulish', system-ui, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 140ms;
+}
+#leads-contact-form .button-submit:hover,
+#leads-contact-form .button-submit:focus { background: #28383F; }
+
+/* Validation errors */
+#leads-contact-form .ValidationErrorBorder { border-color: #9B3B2E !important; }
+#leads-contact-form .validation-summary {
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  border-left: 3px solid #9B3B2E;
+  background: #F6E9E6;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #1E2B33;
+}
+
+/* reCAPTCHA notice under the button */
+.recaptcha-terms {
+  margin-top: 14px;
+  font-family: 'Mulish', system-ui, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #5F676C;
+}
+.recaptcha-terms a { color: #47606E; }
+
+/* Confirmation line after submitting */
+.confirmation { font-size: 15px; color: #5F676C; }
+
+/* Phones: taller fields, full-width button */
+@media (max-width: 480px) {
+  #leads-contact-form input[type=text],
+  #leads-contact-form input[type=email],
+  #leads-contact-form select { height: 52px; }
+  #leads-contact-form textarea { height: 120px; min-height: 120px; }
+  #leads-contact-form .button-submit { width: 100%; }
+}
