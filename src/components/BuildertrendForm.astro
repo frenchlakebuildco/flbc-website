@@ -7,7 +7,11 @@
  *
  * The fields, labels and required settings are managed in Buildertrend, not here.
  * The form runs inside an iframe served by buildertrend.net, so its inner styling
- * can't be changed from this site.
+ * can't be changed from this site (Buildertrend's form settings accept custom CSS).
+ *
+ * After a successful submission: Buildertrend's form reports a new, small height
+ * via postMessage (it re-sends its height whenever its status changes). We use
+ * that to swap the panel into a "thank you" state.
  */
 interface Props { lazy?: boolean; }
 const { lazy = false } = Astro.props;
@@ -16,12 +20,18 @@ const { lazy = false } = Astro.props;
 const BT_FORM_URL =
   'https://buildertrend.net/contact-form/?builderID=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJidWlsZGVySWQiOjExNTQzMH0.djqeJTCwNKKhAFXUNlQthKsgCmMK2BTaCZyme1djFlU';
 ---
-<div class="bt-panel">
-  <div class="bt-panel__head">
+<div class="bt-panel" data-bt-panel>
+  <div class="bt-panel__head" data-bt-before>
     <h3 class="bt-panel__title">Project inquiry</h3>
     <div class="bt-panel__req"><span aria-hidden="true">*</span> Required</div>
   </div>
-  <p class="bt-panel__note">Please include a few photos of your current space. They help us assess your project before our first call.</p>
+  <p class="bt-panel__note" data-bt-before>Please include a few photos of your current space. They help us assess your project before our first call.</p>
+
+  <div class="bt-panel__thanks" data-bt-thanks tabindex="-1" hidden>
+    <span class="bt-panel__mark" aria-hidden="true"></span>
+    <h3 class="display bt-panel__thanks-title">Thank you — we’ll be in touch within one business day.</h3>
+    <p class="bt-panel__thanks-text">If anything comes up in the meantime, call us at <a href="tel:+19523338665">952-333-8665</a>.</p>
+  </div>
 
   <!-- Buildertrend Contact Form -->
   <script is:inline type="text/javascript" src="https://buildertrend.net/contact-form/btClientContactForm.js"></script>
@@ -36,7 +46,7 @@ const BT_FORM_URL =
   ></iframe>
   <!-- /Buildertrend Contact Form -->
 
-  <p class="bt-panel__fallback">
+  <p class="bt-panel__fallback" data-bt-before>
     Trouble with the form? Call <a href="tel:+19523338665">952-333-8665</a> or email <a href="mailto:hello@frenchlakebuild.com">hello@frenchlakebuild.com</a>.
   </p>
 </div>
@@ -51,7 +61,7 @@ const BT_FORM_URL =
     display: flex;
     flex-direction: column;
   }
-  .bt-panel__head, .bt-panel__note, .bt-panel__fallback { margin-inline: 14px; }
+  .bt-panel__head, .bt-panel__note, .bt-panel__fallback, .bt-panel__thanks { margin-inline: 14px; }
   .bt-panel__head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
   .bt-panel__title {
     font-family: var(--font-body); font-size: 12px; font-weight: 600;
@@ -63,13 +73,23 @@ const BT_FORM_URL =
     margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);
     font-size: 15.5px; line-height: 1.55; color: var(--text-body);
   }
-  /* Height is set by Buildertrend's script once the form loads; this avoids a jump before that */
-  .bt-panel__frame { display: block; min-height: 1100px; margin-top: 4px; }
+  .bt-panel__frame { display: block; margin-top: 4px; }
+  /* Until Buildertrend reports the form's height, reserve space so the page doesn't jump */
+  .bt-panel:not(.is-ready) .bt-panel__frame { min-height: 1100px; }
   .bt-panel__fallback {
     margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--border);
     font-size: 14.5px; line-height: 1.55; color: var(--text-muted);
   }
-  .bt-panel__fallback a { color: var(--lake-text); text-decoration: underline; text-underline-offset: 2px; }
+  .bt-panel__fallback a, .bt-panel__thanks-text a { color: var(--lake-text); text-decoration: underline; text-underline-offset: 2px; }
+
+  /* Thank-you state (after a successful submission) */
+  .bt-panel__thanks { display: flex; flex-direction: column; gap: 16px; outline: none; }
+  .bt-panel__thanks[hidden] { display: none; }
+  .bt-panel__mark { width: 56px; height: 3px; background: var(--brass); }
+  .bt-panel__thanks-title { font-size: var(--h2-band); line-height: 1.12; }
+  .bt-panel__thanks-text { font-size: 16.5px; line-height: 1.6; color: var(--text-body); }
+  .bt-panel.is-submitted { padding-bottom: 24px; }
+  .bt-panel.is-submitted [data-bt-before] { display: none; }
 
   @media (max-width: 1080px) {
     .bt-panel { width: 100%; }
@@ -83,3 +103,36 @@ const BT_FORM_URL =
     .bt-panel { padding: 28px 6px 32px; }
   }
 </style>
+
+<script>
+  // Buildertrend's form posts its height to this page ({ height } and "h=…").
+  // Pattern: tiny height while loading → full form height (~1200px) → tiny again
+  // once submitted, when only its confirmation line is left. A drop from a full
+  // form to a small height therefore means "submitted".
+  const BT_ORIGIN = 'https://buildertrend.net';
+  const FORM_MIN = 400;   // px — the loaded form is well above this
+  const DONE_MAX = 250;   // px — the post-submit confirmation is well below this
+
+  const panel = document.querySelector<HTMLElement>('[data-bt-panel]');
+  if (panel) {
+    const thanks = panel.querySelector<HTMLElement>('[data-bt-thanks]')!;
+    let sawForm = false;
+
+    window.addEventListener('message', (e: MessageEvent) => {
+      if (e.origin !== BT_ORIGIN) return;
+      const h = e.data && typeof e.data === 'object' ? Number(e.data.height) : NaN;
+      if (!Number.isFinite(h)) return;
+
+      if (h >= FORM_MIN) {
+        sawForm = true;
+        panel.classList.add('is-ready');
+      } else if (sawForm && h <= DONE_MAX && !panel.classList.contains('is-submitted')) {
+        panel.classList.add('is-submitted');
+        thanks.hidden = false;
+        thanks.focus({ preventScroll: true });
+        const top = panel.getBoundingClientRect().top + window.scrollY - 24;
+        if (window.scrollY > top) window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  }
+</script>
