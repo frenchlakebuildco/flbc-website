@@ -19,7 +19,7 @@ const isHome = current === null && Astro.url.pathname === '/';
       <div class="utility__area">Serving homeowners across the greater Twin Cities</div>
       <div class="utility__right">
         <span class="utility__lic">MN Lic. BC810479</span>
-        <a href="tel:+19523338665" class="utility__phone">952-333-8665</a>
+        <span class="utility__call">Call or text <a href="tel:+19523338665" class="utility__phone">952-333-8665</a></span>
       </div>
     </div>
   </div>
@@ -52,7 +52,7 @@ const isHome = current === null && Astro.url.pathname === '/';
       </ul>
       <a href="/start-a-project" class="btn btn--sand menu-panel__cta">Start a project</a>
       <div class="menu-panel__call">
-        <div class="eyebrow eyebrow--light">Or call</div>
+        <div class="eyebrow eyebrow--light">Call or text</div>
         <a href="tel:+19523338665" class="menu-panel__phone">952-333-8665</a>
       </div>
       <p class="menu-panel__area">Serving homeowners across the greater Twin Cities</p>
@@ -70,10 +70,13 @@ const isHome = current === null && Astro.url.pathname === '/';
   }
   .utility__area { letter-spacing: 0.1em; text-transform: uppercase; }
   .utility__right { display: flex; gap: 28px; align-items: center; letter-spacing: 0.08em; }
-  .utility__phone { color: var(--white); position: relative; }
+  .utility__call { white-space: nowrap; }
+  .utility__phone { color: var(--white); position: relative; margin-left: 4px; }
   /* Enlarged tap area without making the bar taller */
   .utility__phone::before { content: ''; position: absolute; inset: -12px -10px; }
   @media (hover: hover) { .utility__phone:hover { color: var(--brass-light); } }
+  @media (max-width: 960px) { .utility__area { display: none; } .utility__right { flex: 1; justify-content: space-between; } }
+  @media (max-width: 370px) { .utility__lic { display: none; } .utility__right { justify-content: flex-end; } }
 
   /* ---------- Header ---------- */
   .site-header { background: var(--sand); border-bottom: 1px solid var(--border); }

@@ -228,5 +228,6 @@ a {
 @media (max-width: 760px) {
   .contact-sep { display: none; }
   .contact-line { display: flex; flex-direction: column; }
-  .contact-line a { display: inline-flex; align-items: center; min-height: 44px; align-self: flex-start; }
+  .contact-line > a, .contact-line > .contact-call { display: inline-flex; align-items: center; min-height: 44px; align-self: flex-start; }
+  .contact-call { gap: 4px; flex-wrap: wrap; }
 }

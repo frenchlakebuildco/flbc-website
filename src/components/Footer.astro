@@ -22,7 +22,7 @@ import Logo from './Logo.astro';
         <div class="site-footer__col">
           <h2 class="site-footer__heading">Contact</h2>
           <span>Based in Dayton, MN</span>
-          <a href="tel:+19523338665">952-333-8665</a>
+          <span class="site-footer__call">Call or text <a href="tel:+19523338665">952-333-8665</a></span>
         </div>
       </div>
     </div>
@@ -54,6 +54,7 @@ import Logo from './Logo.astro';
   }
   .site-footer__legal { display: flex; gap: 26px; flex-wrap: wrap; }
   .site-footer__area { display: none; }
+  .site-footer__call a { color: var(--text-body); text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 3px; }
   .site-footer__bottom a { color: var(--text-body); }
   @media (hover: hover) {
     .site-footer__col a:hover, .site-footer__bottom a:hover { color: var(--navy); }
@@ -71,7 +72,8 @@ import Logo from './Logo.astro';
     .site-footer__cols { display: contents; }
     .site-footer__col { font-size: 16.5px; gap: 4px; }
     .site-footer__heading { margin-bottom: 6px; }
-    .site-footer__col a, .site-footer__col span { min-height: 44px; display: flex; align-items: center; }
+    .site-footer__col > a, .site-footer__col > span { min-height: 44px; display: flex; align-items: center; }
+    .site-footer__call { gap: 4px; flex-wrap: wrap; }
     .site-footer__blurb { font-size: 16.5px; }
     .site-footer__area { display: inline; }
   }
