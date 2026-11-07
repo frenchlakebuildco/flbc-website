@@ -3,7 +3,7 @@
 Marketing site for French Lake Build Co., built from the Claude Design handoff (`design_handoff_flbc_website`).
 
 - **Stack:** [Astro](https://astro.build) (static output) + plain CSS, self-hosted fonts (Marcellus, Mulish)
-- **Hosting:** Cloudflare Pages (fully static, free plan)
+- **Hosting:** Cloudflare Workers static assets (fully static, free plan)
 - **Inquiry form:** Buildertrend lead capture form, embedded
 - **Pages:** `/` · `/our-work` · `/process` · `/start-a-project` (+ `404`)
 
@@ -16,16 +16,16 @@ npm run build      # outputs to dist/
 npm run preview    # serve the built site
 ```
 
-Node 22 recommended (pinned in `.node-version`, which Cloudflare Pages uses).
+Node 22 recommended (pinned in `.node-version`, which Cloudflare's build uses).
 
-## Deploy to Cloudflare Pages
+## Deploy (Cloudflare)
 
-1. In Cloudflare: **Workers & Pages → Create → Pages → Connect to Git**, and pick `frenchlakebuildco/flbc-website`.
-2. Build settings: framework preset **Astro**, build command `npm run build`, build output directory `dist`. No environment variables are needed.
-3. Every push to `main` builds and publishes automatically.
-4. Custom domain: in the Pages project, **Custom domains → Set up a domain** → `frenchlakebuild.com` (and `www.frenchlakebuild.com`). For the bare domain, the domain's DNS must be managed by Cloudflare. When moving DNS, **check that the email (MX) records were imported** before switching nameservers.
+The site is a Cloudflare Worker named `flbc-website`, connected to this GitHub repository. Every push to `main` builds (`npm run build`) and publishes automatically.
 
-Security headers and asset caching are set in `public/_headers`.
+- **Settings:** `wrangler.jsonc` points Cloudflare at the built `dist/` folder, serves clean URLs (`/our-work`) and shows `404.html` for unknown pages. Keep `"name"` matching the Worker's name in Cloudflare.
+- **Headers:** security headers and long-term caching for `/_astro/*` are in `public/_headers`.
+- **Test with Cloudflare's runtime locally:** `npm run build` then `npx wrangler dev`.
+- **Custom domain:** in Cloudflare, open the `flbc-website` Worker → **Settings → Domains & Routes → Add → Custom domain**, and add `frenchlakebuild.com` and `www.frenchlakebuild.com`. The domain's DNS must be on Cloudflare first. When moving DNS from Squarespace, keep the Google Workspace email records (MX, SPF TXT, `google._domainkey` TXT) and delete the Squarespace placeholder records.
 
 ## How the inquiry form works
 
@@ -56,6 +56,6 @@ On hold (see `MEET_THE_TEAM_LATER.md` in the design handoff). When it's ready: a
 
 - [x] Success-message copy approved: "Thank you — we’ll be in touch within one business day."
 - [ ] Send a test inquiry with photos and confirm it shows up as a lead in Buildertrend
-- [ ] Connect frenchlakebuild.com in Cloudflare Pages (confirm MX records are intact)
+- [ ] Connect frenchlakebuild.com to the Cloudflare Worker (confirm email records are intact)
 - [ ] Delete the old Netlify site
 - [ ] `site` in `astro.config.mjs` is set to `https://frenchlakebuild.com`

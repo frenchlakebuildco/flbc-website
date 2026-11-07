@@ -1,0 +1,12 @@
+// Cloudflare Workers configuration — static site (no server code).
+{
+  "name": "flbc-website",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // Clean URLs: /our-work serves our-work.html
+    "html_handling": "auto-trailing-slash",
+    // Unknown paths show dist/404.html with a 404 status
+    "not_found_handling": "404-page"
+  }
+}
