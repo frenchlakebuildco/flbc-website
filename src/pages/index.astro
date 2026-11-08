@@ -137,23 +137,24 @@ const points = [
         ))}
       </ul>
     </div>
-    <div class="compare">
+    <div class="compare" role="group" aria-label="Design-build compared with hiring a designer and builder separately">
       <div class="compare__card compare__card--db">
-        <h3 class="compare__label">Design–build</h3>
+        <h3 class="compare__title">The design-build difference</h3>
         <ul>
-          <li>One contract</li>
-          <li>Pricing refined during design</li>
-          <li>Builder involved from the first layout</li>
-          <li>One point of contact</li>
+          <li><svg class="compare__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg><span>One contract</span></li>
+          <li><svg class="compare__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg><span>Pricing refined during design</span></li>
+          <li><svg class="compare__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg><span>Builder involved from the first layout</span></li>
+          <li><svg class="compare__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg><span>One point of contact</span></li>
         </ul>
       </div>
+      <div class="compare__vs" aria-hidden="true"><span>vs.</span></div>
       <div class="compare__card compare__card--sep">
-        <h3 class="compare__label">Hired separately</h3>
+        <h3 class="compare__title">Hiring a designer and builder separately</h3>
         <ul>
-          <li>Designer and contractor on separate contracts</li>
-          <li>Price known only after bidding</li>
-          <li>Builder inherits the plan</li>
-          <li>Coordination rests with you</li>
+          <li><svg class="compare__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></svg><span>Designer and contractor on separate contracts</span></li>
+          <li><svg class="compare__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></svg><span>Price known only after bidding</span></li>
+          <li><svg class="compare__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></svg><span>Builder inherits the plan</span></li>
+          <li><svg class="compare__icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></svg><span>Coordination rests with you</span></li>
         </ul>
       </div>
     </div>
@@ -248,16 +249,22 @@ const points = [
   .compare__card { flex: 1; padding: 32px; display: flex; flex-direction: column; gap: 18px; }
   .compare__card--db { background: var(--navy); }
   .compare__card--sep { background: var(--sand-deep); border: 1px solid var(--border); }
-  .compare__label { font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; line-height: 1.4; }
-  .compare__card--db .compare__label { color: var(--brass-light); }
-  .compare__card--sep .compare__label { color: var(--text-muted); }
+  .compare__title { font-family: var(--font-display); font-weight: 400; font-size: 21px; line-height: 1.2; letter-spacing: -0.005em; }
+  .compare__card--db .compare__title { color: var(--white); }
+  .compare__card--sep .compare__title { color: var(--navy); }
   .compare ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 15.5px; line-height: 1.5; }
-  .compare li { padding-bottom: 12px; border-bottom: 1px solid; }
+  .compare li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 10px; align-items: start; padding-bottom: 12px; border-bottom: 1px solid; }
   .compare li:last-child { padding-bottom: 0; border-bottom: 0; }
-  .compare__card--db ul { color: var(--on-dark-muted); }
+  .compare__icon { width: 16px; height: 16px; margin-top: 3px; }
+  .compare__card--db ul { color: var(--on-dark-body); }
   .compare__card--db li { border-color: var(--rule-dark); }
-  .compare__card--sep ul { color: var(--text-muted); }
+  .compare__card--db .compare__icon { color: var(--brass-light); }
+  .compare__card--sep ul { color: var(--text-body); }
   .compare__card--sep li { border-color: var(--border); }
+  .compare__card--sep .compare__icon { color: var(--input-border); }
+  .compare__vs { display: none; }
+  /* Side by side: reserve two heading lines so both lists start at the same height */
+  @media (min-width: 481px) { .compare__title { min-height: 2.4em; } }
 
   /* ---------- Inquiry ---------- */
   .inquire { background: var(--navy); }
@@ -333,7 +340,12 @@ const points = [
 
     .phase { padding: 26px 20px; }
 
-    .compare { flex-direction: column; }
+    .compare { flex-direction: column; gap: 0; }
+    .compare__vs {
+      display: flex; align-items: center; gap: 14px; padding: 14px 0;
+      font-family: var(--font-display); font-size: 18px; color: var(--text-muted);
+    }
+    .compare__vs::before, .compare__vs::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
     .inquire__inner { padding-bottom: 0; gap: 36px; padding-inline: 0; }
     .inquire__copy { padding-inline: var(--pad); }
