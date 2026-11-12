@@ -34,7 +34,8 @@ The "Project inquiry" form on Home and Start a Project is **Buildertrend's lead 
 - **Fields, labels, required settings and dropdown options are managed in Buildertrend**, not in this code. Photos are intentionally required, so the team can assess a project before the first call.
 - The form is served from buildertrend.net, so its inner styling can't be changed from this site. The panel around it (heading, photo note, fallback phone/email line) is ours.
 - `btClientContactForm.js` from Buildertrend resizes the iframe to fit the form.
-- **Form styling:** the form's look (fonts, field borders, navy button) comes from `buildertrend/form-custom.css`, pasted into Buildertrend's contact form **Custom CSS** setting. That file is the source copy; edit it there and paste the whole file into Buildertrend again. It isn't used by the website build.
+- **Form styling:** Buildertrend sets the form's look on their end, by request through their support. They can change colors and fonts (Google Fonts only); layout, borders and spacing are fixed. Current settings (Nov 2026): Mulish throughout; text and labels `#1E2B33`; field text 16px (keeps iPhones from zooming in on tap), labels 15px; submit button `#1E2B33` with white text.
+- `buildertrend/form-custom.css` is an earlier, fuller stylesheet that Buildertrend doesn't apply. It's kept only as a reference for the intended look and isn't used by the website build.
 - If Buildertrend gives you new embed code (for example after regenerating it), replace `BT_FORM_URL` in `BuildertrendForm.astro`.
 
 ## Editing content
